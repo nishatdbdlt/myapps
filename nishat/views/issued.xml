@@ -1,0 +1,87 @@
+<odoo>
+    <!-- Tree View WITHOUT Print Button -->
+    <record id="view_library_issue_tree" model="ir.ui.view">
+        <field name="name">library.issue.tree</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="serial_no" string="SL"/>
+                <field name="student_name"/>
+                <field name="student_class"/>
+                <field name="roll_number"/>
+                <field name="issue_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View WITH Print Button -->
+    <record id="view_library_issue_form" model="ir.ui.view">
+        <field name="name">library.issue.form</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="print_all_reports"
+                            string="Print"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-print"/>
+                </header>
+                <group>
+                    <field name="student_name"/>
+                    <field name="student_class"/>
+                    <field name="roll_number"/>
+                    <field name="issue_date"/>
+                    <field name="book_id" readonly="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_issued_books" model="ir.actions.act_window">
+        <field name="name">Issued Books</field>
+        <field name="res_model">library.issue</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+
+
+
+<!--    <record id="action_issued_students_popup" model="ir.actions.act_window">-->
+<!--    <field name="name">Issued Students</field>-->
+<!--    <field name="res_model">library.issue</field>-->
+<!--    <field name="view_mode">tree,form</field>-->
+<!--    <field name="context">{'create': False}</field>-->
+<!--    <field name="domain">[('book_id', '=', active_id)]</field>-->
+<!--    <field name="target">new</field> &lt;!&ndash; This makes it a popup &ndash;&gt;-->
+<!--</record>-->
+<!--   <record id="view_library_issue_popup_form" model="ir.ui.view">-->
+<!--    <field name="name">library.issue.popup.form</field>-->
+<!--    <field name="model">library.issue</field>-->
+<!--    <field name="priority" eval="20"/> &lt;!&ndash; Ensure this is used in the popup &ndash;&gt;-->
+<!--    <field name="arch" type="xml">-->
+<!--        <form>-->
+<!--            <header>-->
+<!--                <button name="print_all_reports"-->
+<!--                        string="Print"-->
+<!--                        type="object"-->
+<!--                        class="btn-primary"-->
+<!--                        icon="fa-print"/>-->
+<!--            </header>-->
+<!--            <group>-->
+<!--                <field name="student_name"/>-->
+<!--                <field name="student_class"/>-->
+<!--                <field name="roll_number"/>-->
+<!--                <field name="issue_date"/>-->
+<!--                <field name="book_id" readonly="1"/>-->
+<!--            </group>-->
+<!--        </form>-->
+<!--    </field>-->
+<!--</record>-->
+
+
+    <!-- Menu -->
+    <menuitem id="menu_issued_books" name="Issued Books" parent="menu_library_root" action="action_issued_books"/>
+</odoo>

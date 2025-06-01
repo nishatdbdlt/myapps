@@ -1,0 +1,39 @@
+<odoo>
+  <record id="view_active_member_form" model="ir.ui.view">
+    <field name="name">edu.active.member.form</field>
+    <field name="model">edu.active.member</field>
+    <field name="arch" type="xml">
+      <form string="Active Members">
+        <sheet>
+          <group>
+            <field name="user_type"/>
+            <field name="class_id"/>
+            <field name="selected_section_id" domain="[('class_id', '=', class_id)]"/>
+          </group>
+
+          <field name="student_ids" attrs="{'invisible': [('student_ids', '=', False)]}">
+            <tree string="Students">
+              <field name="photo" widget="image" options="{'size': [45,45]}"/>
+              <field name="name"/>
+              <field name="roll"/>
+              <field name="phone"/>
+              <field name="lid" string="Library ID"/>
+            </tree>
+          </field>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_active_member" model="ir.actions.act_window">
+    <field name="name">Active Members</field>
+    <field name="res_model">edu.active.member</field>
+    <field name="view_mode">form,tree</field>
+    <field name="view_id" ref="view_active_member_form"/>
+    <field name="target">current</field>
+  </record>
+
+  <!-- Menu item -->
+  <menuitem id="menu_active_member" name="Active Members" parent="base.menu_custom" action="action_active_member"/>
+</odoo>

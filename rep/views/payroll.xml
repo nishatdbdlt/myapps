@@ -1,0 +1,48 @@
+<!-- manage_retail_erp/views/payroll_views.xml -->
+
+<odoo>
+    <record id="view_retail_payroll_form" model="ir.ui.view">
+        <field name="name">retail.payroll.form</field>
+        <field name="model">retail.payroll</field>
+        <field name="arch" type="xml">
+            <form string="Retail Payroll">
+                <sheet>
+                    <group>
+                        <field name="employee_name"/>
+                        <field name="employee_id"/>
+                        <field name="salary"/>
+                        <field name="bonus"/>
+                        <field name="total_payable" readonly="1"/>
+                        <field name="payment_status"/>
+                        <field name="payment_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_retail_payroll_tree" model="ir.ui.view">
+        <field name="name">retail.payroll.tree</field>
+        <field name="model">retail.payroll</field>
+        <field name="arch" type="xml">
+            <tree string="Payroll">
+                <field name="employee_name"/>
+                <field name="employee_id"/>
+                <field name="salary"/>
+                <field name="bonus"/>
+                <field name="total_payable"/>
+                <field name="payment_status"/>
+                <field name="payment_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_retail_payroll" model="ir.actions.act_window">
+        <field name="name">Payroll</field>
+        <field name="res_model">retail.payroll</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_payroll" name="Payroll" parent="menu_retail_sales_root"/>
+    <menuitem id="menu_action_payroll" name="Manage Payroll" parent="menu_payroll" action="action_retail_payroll"/>
+</odoo>

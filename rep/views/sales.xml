@@ -1,0 +1,59 @@
+<!-- manage_retail_erp/views/sales_views.xml -->
+
+<odoo>
+    <record id="view_retail_sales_form" model="ir.ui.view">
+        <field name="name">retail.sales.form</field>
+        <field name="model">retail.sales</field>
+        <field name="arch" type="xml">
+            <form string="Retail Sale">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="customer_id"/>
+                        <field name="product_name"/>
+                        <field name="quantity"/>
+                        <field name="price_unit"/>
+                        <field name="total_price" readonly="1"/>
+                        <field name="payment_status"/>
+                        <field name="sale_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_retail_sales_tree" model="ir.ui.view">
+        <field name="name">retail.sales.tree</field>
+        <field name="model">retail.sales</field>
+        <field name="arch" type="xml">
+            <tree string="Retail Sales">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="product_name"/>
+                <field name="quantity"/>
+                <field name="total_price"/>
+                <field name="payment_status"/>
+                <field name="sale_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_retail_sales" model="ir.actions.act_window">
+        <field name="name">Retail Sales</field>
+        <field name="res_model">retail.sales</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="seq_retail_sales" model="ir.sequence">
+    <field name="name">Retail Sales Sequence</field>
+    <field name="code">retail.sales</field>
+    <field name="prefix">SALE-</field>
+    <field name="padding">4</field>
+    <field name="number_next">1</field>
+</record>
+
+
+    <menuitem id="menu_retail_sales_root" name="Retail ERP"/>
+    <menuitem id="menu_retail_sales" name="Sales" parent="menu_retail_sales_root"/>
+    <menuitem id="menu_action_retail_sales" name="Retail Sales" parent="menu_retail_sales" action="action_retail_sales"/>
+</odoo>

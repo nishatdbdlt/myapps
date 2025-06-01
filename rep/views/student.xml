@@ -1,0 +1,20 @@
+<odoo>
+  <template id="student_section_template" inherit_id="web.layout">
+    <t t-name="edu.student_section_template">
+      <t t-foreach="sections" t-as="section">
+        <div class="section-button">
+          <h3><t t-esc="section['name']"/></h3>
+          <t t-foreach="section['students']" t-as="student">
+            <div class="student-card">
+              <img t-att-src="'data:image/png;base64,%s' % student['photo']" class="img-circle" width="80"/>
+              <p><strong><t t-esc="student['name']"/></strong></p>
+              <p>Roll: <t t-esc="student['roll']"/></p>
+              <p>Class: <t t-esc="student['class']"/></p>
+              <p>Section: <t t-esc="student['section']"/></p>
+            </div>
+          </t>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

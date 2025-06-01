@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_active_member_form" model="ir.ui.view">
+        <field name="name">edu.active.member.form</field>
+        <field name="model">edu.active.member</field>
+        <field name="arch" type="xml">
+            <form string="Active Member Filter" create="false" edit="false">
+                <group>
+                    <field name="user_type" widget="selection"/>
+                    <field name="select_class"/>
+                </group>
+                <button name="action_show_students" string="All Students" type="object" class="btn-primary"/>
+                <div id="student_display"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_active_member" model="ir.actions.act_window">
+        <field name="name">Library Members</field>
+        <field name="res_model">edu.active.member</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_active_member_form"/>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_active_member" name="Library Members"
+              parent="library_management.menu_library_root"
+              action="action_active_member"/>
+</odoo>

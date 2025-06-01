@@ -1,0 +1,48 @@
+<odoo>
+    <!-- Tree View of students -->
+    <record id="view_tree_school_student" model="ir.ui.view">
+        <field name="name">school.student.tree</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <tree string="Students">
+                <field name="photo" widget="image" options="{'size': [50, 50]}"/>
+                <field name="name"/>
+                <field name="roll"/>
+                <field name="phone"/>
+                <field name="class_id"/>
+                <field name="section_id"/>
+                <field name="user_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View with filters -->
+    <record id="view_search_school_student" model="ir.ui.view">
+        <field name="name">school.student.search</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <search string="Search Students">
+                <field name="name"/>
+                <filter name="filter_students" string="Students" domain="[('user_type', '=', 'student')]"/>
+                <filter name="filter_teachers" string="Teachers" domain="[('user_type', '=', 'teacher')]"/>
+                <filter string="Class" name="class_filter" domain="[]" context="{'group_by':'class_id'}"/>
+                <filter string="Section" name="section_filter" domain="[]" context="{'group_by':'section_id'}"/>
+                <field name="class_id" string="Class"/>
+                <field name="section_id" string="Section"/>
+                <field name="user_type" string="User Type"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action to open the tree view -->
+    <record id="action_school_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_tree_school_student"/>
+    </record>
+
+    <!-- Menu to access students -->
+    <menuitem id="menu_school_root" name="School Management" sequence="10"/>
+    <menuitem id="menu_school_students" name="Students" parent="menu_school_root" action="action_school_student" sequence="20"/>
+</odoo>

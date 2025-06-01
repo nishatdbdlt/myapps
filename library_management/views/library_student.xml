@@ -1,0 +1,54 @@
+<odoo>
+  <!-- Form to filter by User Type and Class -->
+  <record id="view_library_member_filter_form" model="ir.ui.view">
+    <field name="name">library.member.filter.form</field>
+    <field name="model">library.student</field>
+    <field name="arch" type="xml">
+      <form string="Library Member Filter">
+        <sheet>
+          <group>
+            <field name="user_type"/>
+            <field name="class_id"/>
+          </group>
+          <group>
+            <field name="section"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Tree/List view showing students -->
+  <record id="view_library_member_tree" model="ir.ui.view">
+    <field name="name">library.member.tree</field>
+    <field name="model">library.student</field>
+    <field name="arch" type="xml">
+      <tree string="Library Members" create="false" edit="false">
+        <field name="photo" widget="image" class="oe_avatar"/>
+        <field name="name"/>
+        <field name="roll"/>
+        <field name="class_id"/>
+        <field name="section"/>
+        <field name="phone"/>
+        <button name="action_make_member" string="Make Member" type="object" class="btn-primary"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Search filters -->
+  <record id="view_library_member_search" model="ir.ui.view">
+    <field name="name">library.member.search</field>
+    <field name="model">library.student</field>
+    <field name="arch" type="xml">
+      <search string="Filter Students">
+        <field name="user_type"/>
+        <field name="class_id"/>
+        <group expand="1" string="Section">
+          <filter string="Golap" name="golap_filter" domain="[('section','=','গোলাপ')]"/>
+          <filter string="Shapla" name="shapla_filter" domain="[('section','=','শাপলা')]"/>
+          <filter string="Beli" name="beli_filter" domain="[('section','=','বেলি')]"/>
+        </group>
+      </search>
+    </field>
+  </record>
+</odoo>

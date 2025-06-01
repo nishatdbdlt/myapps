@@ -1,0 +1,48 @@
+<!-- manage_retail_erp/views/inventory_views.xml -->
+
+<odoo>
+    <record id="view_retail_inventory_form" model="ir.ui.view">
+        <field name="name">retail.inventory.form</field>
+        <field name="model">retail.inventory</field>
+        <field name="arch" type="xml">
+            <form string="Retail Inventory">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="product_code"/>
+                        <field name="quantity_available"/>
+                        <field name="reorder_level"/>
+                        <field name="last_restock_date"/>
+                        <field name="is_below_reorder" readonly="1"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_retail_inventory_tree" model="ir.ui.view">
+        <field name="name">retail.inventory.tree</field>
+        <field name="model">retail.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Retail Inventory">
+                <field name="name"/>
+                <field name="product_code"/>
+                <field name="quantity_available"/>
+                <field name="reorder_level"/>
+                <field name="is_below_reorder"/>
+                <field name="last_restock_date"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_retail_inventory" model="ir.actions.act_window">
+        <field name="name">Inventory</field>
+        <field name="res_model">retail.inventory</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_inventory" name="Inventory" parent="menu_retail_sales_root"/>
+    <menuitem id="menu_action_inventory" name="Manage Stock" parent="menu_inventory" action="action_retail_inventory"/>
+</odoo>

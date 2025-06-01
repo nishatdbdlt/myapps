@@ -1,0 +1,12 @@
+<odoo>
+    <report
+    id="report_library_issue_tamplate"
+    string="Issued Book Report"
+    model="library.issue"
+    report_type="qweb-pdf"
+    name="nishat.report_library_issue_template"
+    file="nishat.report_library_issue_template"
+    paperformat="a4"
+/>
+
+</odoo>

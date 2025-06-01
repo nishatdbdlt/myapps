@@ -1,0 +1,7 @@
+<odoo>
+    <record id="model_retail_sales" model="ir.model">
+        <field name="name">retail.sales</field>
+        <field name="model">retail.sales</field>
+        <field name="state">manual</field>
+    </record>
+</odoo>

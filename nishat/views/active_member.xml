@@ -1,0 +1,81 @@
+<!--<odoo>-->
+<!--  <record id="view_edu_active_member_form" model="ir.ui.view">-->
+<!--    <field name="name">edu.active.member.form</field>-->
+<!--    <field name="model">edu.active.member</field>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <form>-->
+<!--            <sheet>-->
+<!--                <group>-->
+<!--                    <field name="user_type"/>-->
+<!--                    <field name="select_class"/>-->
+<!--                    <field name="selected_section"/>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                    <field name="student_ids" readonly="1">-->
+<!--                        <tree>-->
+<!--                            <field name="name"/>-->
+<!--                            <field name="roll"/>-->
+<!--                            <field name="phone"/>-->
+<!--                            <field name="section_id"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </group>-->
+<!--            </sheet>-->
+<!--        </form>-->
+<!--    </field>-->
+<!--</record>-->
+
+
+<!--  <record id="action_edu_active_member" model="ir.actions.act_window">-->
+<!--    <field name="name">Active Members</field>-->
+<!--    <field name="res_model">edu.active.member</field>-->
+<!--    <field name="view_mode">form,tree</field>-->
+<!--    <field name="target">current</field>-->
+<!--  </record>-->
+
+<!--  <menuitem id="menu_edu_active_member_root" name="Education"/>-->
+<!--  <menuitem id="menu_edu_active_member" name="Active Members" parent="menu_edu_active_member_root" action="action_edu_active_member"/>-->
+<!--</odoo>-->
+
+       <odoo>
+    <record id="view_library_member_form" model="ir.ui.view">
+        <field name="name">manage.library.member.from</field>
+        <field name="model">edu.active.member</field>
+        <field name="arch" type="xml">
+            <form string="Library Member">
+                <group>
+                    <field name="user_type"/>
+                    <field name="select_id"/>
+                </group>
+                <!-- <group string="Students">
+                    <field name="students">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="roll"/>
+                            <field name="class_id"/>
+                            <field name="photo" widget="image" class="oe_avatar"/>    to do when we connect other database
+
+                        </tree>
+                    </field>
+                </group>  -->
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_manage_library_member" model="ir.actions.act_window">
+        <field name="name">Manage Library Member</field>
+        <field name="res_model">edu.active.member</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+
+
+    <!-- Active Members submenu -->
+    <menuitem id="menu_edu_active_member"
+              name="Active Members"
+              parent="menu_library_root"/>
+
+
+</odoo>

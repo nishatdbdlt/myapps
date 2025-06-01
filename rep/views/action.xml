@@ -1,0 +1,15 @@
+<odoo>
+  <!-- Action -->
+  <record id="action_library_member" model="ir.actions.act_window">
+    <field name="name">Library Members</field>
+    <field name="res_model">library.student</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_library_member_search"/>
+  </record>
+
+  <!-- Menu -->
+  <menuitem id="menu_library_root" name="Library Management"/>
+  <menuitem id="menu_library_member" name="Members"
+            parent="menu_library_root"
+            action="action_library_member"/>
+</odoo>
