@@ -5,3 +5,6 @@ access_school_class,school.class,model_school_class,base.group_user,1,1,1,1
 access_school_section,school.section,model_school_section,base.group_user,1,1,1,1
 access_school_student,school.student,model_school_student,base.group_user,1,1,1,1
 access_library_active_member,access_library_active_member,model_library_active_member,base.group_user,1,1,1,1
+access_library_issue,access_library_issue,model_library_issue,,1,1,1,1
+access_library_book,access_library_book,model_library_book,,1,1,1,1
+access_edu_member,edu.member,model_edu_member,base.group_user,1,1,1,1

@@ -9,7 +9,6 @@ access_retail_dashboard_user,access.retail.dashboard.user,model_retail_dashboard
 
 access_edu_active_member,access_edu_active_member,model_edu_active_member,base.group_user,1,1,1,1
 access_school_class,access_school_class,model_school_class,base.group_user,1,1,1,1
-access_library_student,access_library_student,model_library_student,base.group_user,1,1,1,1
 
 
 access_edu_class,access_edu_class,model_edu_class,,1,1,1,1

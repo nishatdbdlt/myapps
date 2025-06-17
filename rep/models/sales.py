@@ -10,7 +10,7 @@ class RetailSales(models.Model):
                        default=lambda self: self.env['ir.sequence'].next_by_code('retail.sales'))
 
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)
-    product_name = fields.Char(string='Product Name', required=True)
+    product_name = fields.Char( string='product', required=True)
     quantity = fields.Integer(string='Quantity', required=True, default=1)
     price_unit = fields.Float(string='Unit Price', required=True)
     total_price = fields.Float(string='Total Price', compute='_compute_total', store=True)

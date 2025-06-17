@@ -21,6 +21,9 @@
                                 <field name="roll"/>
                                 <field name="phone"/>
                                 <field name="section_id"/>
+                                 <field name="is_active"/>
+                                <button name="action_activate_student" type="object" string="Activate" class="btn-primary"/>
+                                 <button name="action_deactivate_student" type="object" string="Deactivate" class="btn-danger"/>
                             </tree>
                         </field>
                     </group>

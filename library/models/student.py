@@ -14,6 +14,7 @@ class SchoolStudent(models.Model):
         ('student', 'Student'),
         ('teacher', 'Teacher'),
     ], string="User Type", default='student')
+    is_active = fields.Boolean(string="Active", default=True)
 
     @api.depends('class_id')
     def _compute_sections(self):
@@ -30,4 +31,12 @@ class SchoolStudent(models.Model):
             if rec.selected_section_id:
                 domain.append(('section_id', '=', rec.selected_section_id.id))
             rec.student_ids = self.env['edu.student'].search(domain)
+
+    def action_activate_student(self):
+        for student in self:
+            student.is_active = True
+
+    def action_deactivate_student(self):
+        for student in self:
+            student.is_active = False
 

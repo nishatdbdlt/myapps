@@ -27,7 +27,9 @@ Long description of module's purpose
         'views/templates.xml',
         'views/active.xml',
         'views/student.xml',
-        'views/library.xml',
+        'views/issue_book.xml',
+        'views/library_book.xml',
+        'views/library_member.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

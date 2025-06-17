@@ -75,6 +75,7 @@
     <!-- Active Members submenu -->
     <menuitem id="menu_edu_active_member"
               name="Active Members"
+               action="action_manage_library_member"
               parent="menu_library_root"/>
 
 
