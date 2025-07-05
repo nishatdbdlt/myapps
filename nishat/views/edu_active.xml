@@ -1,0 +1,62 @@
+
+<odoo>
+    <!-- ========== FORM VIEW ========== -->
+    <record id="view_form_active_member" model="ir.ui.view">
+        <field name="name">edu.active.member.form</field>
+        <field name="model">edu.active.member</field>
+        <field name="arch" type="xml">
+            <form string="Active Member" create="false" edit="false">
+                <sheet>
+                    <group string="Filter Students" col="2">
+                        <field name="user_type"/>
+                        <field name="select_class_id"/>
+                    </group>
+
+                    <separator string="Student List" colspan="2"/>
+
+                     <group>
+                        <field name="student_ids" nolabel="8">
+                            <tree>
+                                <!-- <field name="student_photo" widget="image" options="{'size': [64, 64]}"/> -->
+                                <field name="student_name"/>
+                                <field name="student_uid"/>
+                                <field name="student_photo" widget="image" options="{'size': [64, 64]}"/>
+                                 <field name="section_id"/>
+                                 <field  name ="student_roll"/>
+                                 <!-- <field  name ="student_phone"/> -->
+
+                                 <!-- <field  name ="is_active"/> -->
+                                  <!-- <button name="action_activate_student" type="object" string="Activate" class="btn-primary"/>
+                                 <button name="action_deactivate_student" type="object" string="Deactivate" class="btn-danger"/>  -->
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========== ACTION ========== -->
+    <record id="action_active_member" model="ir.actions.act_window">
+        <field name="name">Active Members</field>
+        <field name="res_model">edu.active.member</field>
+        <field name="view_mode">form</field>
+        <field name="target">main</field>
+    </record>
+
+    <!-- ========== MENU ITEMS ========== -->
+    <!-- <menuitem id="menu_library_root"
+              name="Library Management"
+              sequence="10"/>
+
+    <menuitem id="menu_active_member_parent"
+              name="Members"
+              parent="menu_library_root"
+              sequence="20"/>
+
+    <menuitem id="menu_active_member"
+              name="Active Members"
+              parent="menu_active_member_parent"
+              action="action_active_member"
+              sequence="30"/> -->
+</odoo>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="view_form_edu_active_member" model="ir.ui.view">
+    <!-- Form view for edu.member -->
+    <record id="view_form_edu_member" model="ir.ui.view">
         <field name="name">edu.member.form</field>
         <field name="model">edu.member</field>
         <field name="arch" type="xml">
@@ -9,18 +10,15 @@
                     <group>
                         <field name="user_type"/>
                         <field name="select_class_id"/>
-                        <!-- Optional: You can keep this button if you want logging or future functionality -->
                         <button name="get_students" string="Show Students" type="object" class="btn-primary"/>
                     </group>
 
                     <group string="Filtered Students" colspan="2">
-                        <field name="filtered_student_ids">
+                        <field name="filtered_student_ids" nolabel="1">
                             <tree string="Students">
                                 <field name="name"/>
-                                <field name="roll"/>
-                                <field name="class_id"/>
-                                <field name="section_id"/>
                                 <field name="phone"/>
+                                <button name="open_library_wizard" type="object" string="+" class="oe_stat_button"/>
                             </tree>
                         </field>
                     </group>
@@ -29,16 +27,36 @@
         </field>
     </record>
 
-    <!-- Action -->
+    <!-- Wizard form view -->
+      <record id="view_library_member_wizard_form" model="ir.ui.view">
+        <field name="name">library.member.wizard.form</field>
+        <field name="model">library.member.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Manage Library Info">
+                <group>
+                    <field name="student_id"/>
+                    <field name="library_id"/>
+                    <field name="temp_library_id"/>
+                    <field name="library_fee"/>
+                </group>
+                <footer>
+                    <button name="action_save_member" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for edu.member -->
     <record id="action_edu_member" model="ir.actions.act_window">
         <field name="name">Library Member</field>
         <field name="res_model">edu.member</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="view_form_edu_active_member"/>
+        <field name="view_id" ref="view_form_edu_member"/>
         <field name="target">current</field>
     </record>
 
     <!-- Menu -->
-
+    <menuitem id="menu_library_root" name="Library Management"/>
     <menuitem id="menu_edu_member" name="Library Member" parent="menu_library_root" action="action_edu_member"/>
 </odoo>

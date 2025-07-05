@@ -1,0 +1,52 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_garment_inventory_tree" model="ir.ui.view">
+        <field name="name">garment.inventory.tree</field>
+        <field name="model">garment.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Inventory Movements">
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="movement_type"/>
+                <field name="source_location"/>
+                <field name="destination_location"/>
+                <field name="barcode_scan"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_garment_inventory_form" model="ir.ui.view">
+        <field name="name">garment.inventory.form</field>
+        <field name="model">garment.inventory</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Movement">
+                <sheet>
+                    <group>
+                        <field name="barcode_scan"/>
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                        <field name="movement_type"/>
+                        <field name="source_location"/>
+                        <field name="destination_location"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_garment_inventory" model="ir.actions.act_window">
+        <field name="name">Inventory Movements</field>
+        <field name="res_model">garment.inventory</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create inventory stock in/out/transfer logs here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="garment_inventory_menu" name="inventory" parent="garments_root_menu" action="action_garment_inventory"/>
+</odoo>

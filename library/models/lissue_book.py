@@ -12,6 +12,9 @@ class LibraryIssue(models.Model):
     issue_date = fields.Date(string='Issue Date', default=fields.Date.today)
     book_id = fields.Many2one('library.book', string='Book')
     serial_no = fields.Integer(string='Serial No', compute='_compute_serial_no', store=False)
+    member_id = fields.Many2one('edu.member')
+    due_date = fields.Date()
+    return_date = fields.Date()
 
     @api.depends('book_id')
     def _compute_serial_no(self):
@@ -38,6 +41,10 @@ class LibraryIssue(models.Model):
                     record.serial_no = issue_id_to_serial[record.id]
 
 
+    # def print_all_reports(self):
+    #     all_ids = self.search([]).ids
+    #     return self.env.ref('library.report_library_issue').report_action(all_ids)
+
     def print_all_reports(self):
-        all_ids = self.search([]).ids
-        return self.env.ref('nishat.report_library_issue_tamplate').report_action(all_ids)
+        return self.env.ref('library.report_library_issue').report_action(self)
+

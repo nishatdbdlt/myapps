@@ -13,7 +13,10 @@ class EduActiveMember(models.Model):
     ], string="User Type")
 
     select_class_id = fields.Many2one('school.class', string="Select Class")
+
     filtered_student_ids = fields.One2many('school.student', compute='_compute_filtered_students', string="Students")
+    # roll = fields.Char(string="Roll Number")  # ✅ Add this line
+    # name=fields.Char(string="name")
 
     @api.depends('user_type', 'select_class_id')
     def _compute_filtered_students(self):

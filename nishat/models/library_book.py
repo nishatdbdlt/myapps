@@ -6,13 +6,15 @@ class LibraryIssue(models.Model):
     _name = 'library.issue'
     _description = 'Issued Book'
 
-    student_name = fields.Char(string='Student Name')
-    student_class = fields.Char(string='Class')
-    roll_number = fields.Char(string='Roll')
+    student_id = fields.Many2one('school.student',string='Student Name')
+    # student=fields.Char(string='student')
+    student_class_id = fields.Many2one('school.class', string='Class')  # ✅ FIXED    roll_number = fields.Char(string='Roll')
+    # student_class = fields.Integer(string='class')
     issue_date = fields.Date(string='Issue Date', default=fields.Date.today)
     book_id = fields.Many2one('library.book', string='Book')
     serial_no = fields.Integer(string='Serial No', compute='_compute_serial_no', store=False)
-
+    roll=fields.Integer(string='roll')
+    user_id = fields.Many2one('res.users', string="Issued By", default=lambda self: self.env.user)
     @api.depends('book_id')
     def _compute_serial_no(self):
         # Group records by book to optimize DB queries

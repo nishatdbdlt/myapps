@@ -1,0 +1,62 @@
+<!-- garment_management/views/challan_views.xml -->
+<odoo>
+    <record id="view_form_garment_challan" model="ir.ui.view">
+        <field name="name">garment.challan.form</field>
+        <field name="model">garment.challan</field>
+        <field name="arch" type="xml">
+            <form string="Challan">
+                <header>
+                    <button name="action_deliver" type="object" string="Deliver"
+                            if="state == 'draft'" class="btn-primary"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft"
+                            if="state == 'delivered'" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,delivered"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="customer_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="challan_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_garment_challan" model="ir.ui.view">
+        <field name="name">garment.challan.tree</field>
+        <field name="model">garment.challan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="customer_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menu and Action -->
+    <menuitem id="menu_garment_root" name="Garment Management"/>
+    <menuitem id="menu_challan" name="Challan" parent="menu_garment_root"/>
+    <record id="action_garment_challan" model="ir.actions.act_window">
+        <field name="name">Challans</field>
+        <field name="res_model">garment.challan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_challan_action" name="Manage Challans" parent="menu_challan" action="action_garment_challan"/>
+</odoo>

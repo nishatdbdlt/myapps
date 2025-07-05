@@ -1,0 +1,34 @@
+<!--<odoo>-->
+<!--    <record id="view_library_report_form" model="ir.ui.view">-->
+<!--        <field name="name">library.report.form</field>-->
+<!--        <field name="model">library.report</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Library Report">-->
+<!--    <group>-->
+<!--        <field name="select_class"/>-->
+<!--         <field name="student_id" domain="[('select_class_id', '=', select_class)]"/>-->
+<!--&lt;!&ndash;        <field name="name" readonly="1"/>&ndash;&gt;-->
+<!--        <field name="roll" readonly="1"/>-->
+<!--        <field name="from_date"/>-->
+<!--        <field name="to_date"/>-->
+<!--        <field name="overdue"/>-->
+<!--        <field name="due_type"/>-->
+<!--    </group>-->
+<!--    <footer>-->
+<!--        <button name="action_print_report" type="object" string="Print Report" class="btn-primary"/>-->
+<!--        <button string="Cancel" class="btn-secondary" special="cancel"/>-->
+<!--    </footer>-->
+<!--</form>-->
+
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="action_library_report" model="ir.actions.act_window">-->
+<!--        <field name="name">Library Report</field>-->
+<!--        <field name="res_model">library.report</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="target">new</field>-->
+<!--    </record>-->
+
+<!--    <menuitem id="menu_library_report" name="Generate Report" parent="menu_library_root" action="action_library_report"/>-->
+
+<!--</odoo>-->

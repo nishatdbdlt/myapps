@@ -1,0 +1,23 @@
+<odoo>
+    <!-- Inherit product.template form to add tag_ids field -->
+    <record id="view_product_form_inherit_with_tags" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.tags</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="tag_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action to open product.tag tree+form -->
+    <record id="action_product_tag" model="ir.actions.act_window">
+        <field name="name">Product Tags</field>
+        <field name="res_model">product.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu item to open product.tag list -->
+    <menuitem id="product_tag_root" name="Product " parent="menu_library_root" action="action_product_tag"/>
+</odoo>

@@ -1,0 +1,96 @@
+<!-- garment_management/views/product_views.xml -->
+<odoo>
+    <!-- Product Category Form -->
+    <record id="view_form_garment_product_category" model="ir.ui.view">
+        <field name="name">garment.product.category.form</field>
+        <field name="model">garment.product.category</field>
+        <field name="arch" type="xml">
+            <form string="Product Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Product Category Tree -->
+    <record id="view_tree_garment_product_category" model="ir.ui.view">
+        <field name="name">garment.product.category.tree</field>
+        <field name="model">garment.product.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Product Form -->
+    <record id="view_form_garment_product" model="ir.ui.view">
+        <field name="name">garment.product.form</field>
+        <field name="model">garment.product</field>
+        <field name="arch" type="xml">
+            <form string="Garment Product">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="category_id"/>
+                        <field name="color"/>
+                        <field name="size"/>
+                        <field name="uom_id"/>
+                        <field name="price"/>
+                        <field name="quantity_available" readonly="1"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Product Tree -->
+    <record id="view_tree_garment_product" model="ir.ui.view">
+        <field name="name">garment.product.tree</field>
+        <field name="model">garment.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="color"/>
+                <field name="size"/>
+                <field name="quantity_available"/>
+                <field name="uom_id"/>
+                <field name="price"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menus -->
+
+    <!-- Actions -->
+    <record id="action_garment_product_category" model="ir.actions.act_window">
+        <field name="name">Product Categories</field>
+        <field name="res_model">garment.product.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_garment_product" model="ir.actions.act_window">
+        <field name="name">Garment Products</field>
+        <field name="res_model">garment.product</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_garment_product_root" name="Products" parent="menu_garment_root"/>
+
+    <menuitem id="menu_garment_product_category" name="Product Categories"
+              parent="menu_garment_product_root"
+              action="action_garment_product_category"/>
+
+    <menuitem id="menu_garment_product" name="Products"
+              parent="menu_garment_product_root"
+              action="action_garment_product"/>
+
+</odoo>

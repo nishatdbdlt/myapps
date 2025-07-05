@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_garment_production" model="ir.sequence">
+            <field name="name">Garment Production</field>
+            <field name="code">garment.production</field>
+            <field name="prefix">PROD-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

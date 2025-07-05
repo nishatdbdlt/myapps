@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','library'],
+    'depends': ['base','library','product'],
 
     # always loaded
     'data': [
@@ -30,6 +30,13 @@ Long description of module's purpose
 
          'views/views.xml',
         'views/templates.xml',
+        'views/library.xml',
+        'views/issue.xml',
+        'views/library_user.xml',
+        'views/product_tag.xml',
+        'views/product_temp.xml',
+        'views/member.xml',
+        'views/edu_active.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

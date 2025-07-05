@@ -14,7 +14,14 @@ class SchoolStudent(models.Model):
         ('student', 'Student'),
         ('teacher', 'Teacher'),
     ], string="User Type", default='student')
-    is_active = fields.Boolean(string="Active", default=True)
+
+    is_active_member = fields.Boolean(string="Active", default=True)
+
+    show_library_fields = fields.Boolean(string="Show Library Fields", default=False)
+
+    library_id = fields.Integer(string="Library ID")
+    temp_library_id = fields.Char(string="Library Temporary ID")
+    library_fee = fields.Float(string="Library Fee")
 
     @api.depends('class_id')
     def _compute_sections(self):
@@ -40,3 +47,22 @@ class SchoolStudent(models.Model):
         for student in self:
             student.is_active = False
 
+    # def toggle_library_fields(self):
+    #     for record in self:
+    #         record.show_library_fields = not record.show_library_fields
+
+    def open_library_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Manage Library Info',
+            'res_model': 'library.member.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_student_id': self,
+                'default_library_id': self.library_id,
+                'default_temp_library_id': self.temp_library_id,
+                'default_library_fee': self.library_fee,
+            }
+        }

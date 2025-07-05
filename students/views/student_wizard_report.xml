@@ -1,0 +1,47 @@
+<odoo>
+    <!-- QWeb Report Template -->
+    <template id="report_student_wizard_pdf_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Student List - Filtered</h2>
+                <p><strong>Shift:</strong> <span t-esc="doc.shift_id.name"/></p>
+                <p><strong>Class:</strong> <span t-esc="doc.class_id.name"/></p>
+                <p><strong>Section:</strong> <span t-esc="doc.section_id.name"/></p>
+
+                <t t-set="students" t-value="docs.env['school.student'].search([
+                    ('shift_id','=',doc.shift_id.id),
+                    ('class_id','=',doc.class_id.id),
+                    ('section_id','=',doc.section_id.id)
+                ])"/>
+
+                <table class="table table-sm mt16">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="students" t-as="student">
+                            <td><span t-esc="student.name"/></td>
+                            <td><span t-esc="student.roll"/></td>
+                            <td><span t-esc="student.phone"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <!-- Report Action -->
+    <report
+        id="report_student_wizard_pdf"
+        model="library.student.wizard"
+        string="Student Filter PDF"
+        report_type="qweb-pdf"
+        name="students.report_student_wizard_pdf_template"
+        file="students.report_student_wizard_pdf_template"
+        print_report_name="'Student_Report_' + object.shift_id.name"
+    />
+</odoo>

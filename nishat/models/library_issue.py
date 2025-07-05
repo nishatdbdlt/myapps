@@ -10,6 +10,7 @@ class LibraryBook(models.Model):
     book_id = fields.Char(string='Book ID')
     price = fields.Float(string='Price')
     quantity = fields.Integer(string='Quantity')
+    subject_code = fields.Char(string='Subject Code')  # Add this field here
 
     issued_book_ids = fields.One2many('library.issue', 'book_id', string='Issued Books')
 
@@ -22,6 +23,7 @@ class LibraryBook(models.Model):
         ('available', 'Available'),
         ('unavailable', 'Unavailable'),
     ], string='Status', default='available')
+
 
     @api.depends('issued_book_ids')
     def _compute_issued_book_count(self):

@@ -1,24 +1,30 @@
 <odoo>
-    <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
+    <!-- QWeb Report Template -->
+    <template id="report_library_summary_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <h2>Library Summary Report</h2>
+                    <p><strong>Student:</strong> <t t-esc="doc.name"/></p>
+                    <p><strong>Roll:</strong> <t t-esc="doc.roll"/></p>
+                    <p><strong>Class:</strong> <t t-esc="doc.select_class.name"/></p>
+                    <p><strong>From:</strong> <t t-esc="doc.from_date"/></p>
+                    <p><strong>To:</strong> <t t-esc="doc.to_date"/></p>
+                    <p><strong>Overdue:</strong> <t t-esc="doc.overdue"/></p>
+                    <p><strong>Due Type:</strong> <t t-esc="doc.due_type"/></p>
+                </div>
             </t>
-          </dl>
-        </template>
--->
-    </data>
+        </t>
+    </template>
+
+    <!-- QWeb Report Action -->
+    <report
+        id="action_report_library_summary"
+        string="Library Summary Report"
+        model="library.report"
+        report_type="qweb-pdf"
+        name="library.report_library_summary_template"
+        file="library.report_library_summary_template"
+        print_report_name="'Library_Report_' + object.name"
+    />
 </odoo>

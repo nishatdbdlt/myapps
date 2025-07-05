@@ -24,12 +24,14 @@ Long description of module's purpose
     'data': [
          'security/ir.model.access.csv',
         'views/views.xml',
-        'views/templates.xml',
         'views/active.xml',
         'views/student.xml',
         'views/issue_book.xml',
         'views/library_book.xml',
         'views/library_member.xml',
+        'views/templates.xml',
+        'views/student_wizard.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [

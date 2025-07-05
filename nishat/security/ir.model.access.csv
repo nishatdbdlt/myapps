@@ -3,6 +3,16 @@ access_library_book,access_library_book,model_library_book,,1,1,1,1
 access_library_issue,access_library_issue,model_library_issue,,1,1,1,1
 access_edu_active_member,edu.active.member,model_edu_active_member,base.group_user,1,1,1,1
 
+access_library_member,access_library_member,model_library_member,,1,1,1,1
+
+access_school_student_user,access_school_student_user,model_school_student,base.group_user,1,1,1,0
+access_school_class_user,access_school_class_user,model_school_class,base.group_user,1,1,1,1
+
+
+
+access_product_tag,access.product.tag,model_product_tag,base.group_user,1,1,1,1
+access_product_template,access.product.template,product.model_product_template,base.group_user,1,1,1,1
+
 
 
 

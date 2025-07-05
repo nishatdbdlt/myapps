@@ -1,0 +1,45 @@
+<odoo>
+    <!-- Tree View for Members -->
+    <record id="view_library_member_tree" model="ir.ui.view">
+        <field name="name">library.member.tree</field>
+        <field name="model">library.member</field>
+        <field name="arch" type="xml">
+            <tree string="Library Members">
+                <field name="user_type"/>
+                <field name="class_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Members -->
+    <record id="view_library_member_form" model="ir.ui.view">
+        <field name="name">library.member.form</field>
+        <field name="model">library.member</field>
+        <field name="arch" type="xml">
+            <form string="Library Member">
+                <sheet>
+                    <group>
+                        <field name="user_type"/>
+                        <field name="class_id"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to Open Members -->
+    <record id="action_library_member" model="ir.actions.act_window">
+        <field name="name">Library Members</field>
+        <field name="res_model">library.member</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Main Menu -->
+    <menuitem id="menu_library_root" name="Library"/>
+
+    <!-- Submenu: Members -->
+    <menuitem id="menu_library_member" name="Members"
+              parent="menu_library_root"
+              action="action_library_member"/>
+</odoo>

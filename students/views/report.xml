@@ -1,0 +1,40 @@
+<odoo>
+<record id="view_form_library_student_filter" model="ir.ui.view">
+    <field name="name">library.student.filter.form</field>
+    <field name="model">library.student.wizard</field>
+    <field name="arch" type="xml">
+        <form string="Student Filter">
+            <group>
+                <field name="shift_id"/>
+                <field name="class_id"/>
+                <field name="section_id"/>
+            </group>
+            <group string="Filtered Students">
+                <field name="students_ids">
+                    <tree>
+                        <field name="name"/>
+                        <field name="roll"/>
+                        <field name="shift_id"/>
+                        <field name="class_id"/>
+                        <field name="section_id"/>
+                        <field name="phone"/>
+                    </tree>
+                </field>
+            </group>
+            <button name="action_print_pdf" string="Print PDF" type="object" class="btn-primary"/>
+        </form>
+    </field>
+</record>
+
+<record id="action_library_student_filter" model="ir.actions.act_window">
+    <field name="name">Student Filter</field>
+    <field name="res_model">library.student.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">current</field>
+</record>
+
+    <menuitem id="menu_school_root" name="School Management"/>
+
+
+<menuitem id="menu_school_filter" name="Student Filter" parent="menu_school_root" action="action_library_student_filter"/>
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_school_section_tree" model="ir.ui.view">
+        <field name="name">school.section.tree</field>
+        <field name="model">school.section</field>
+        <field name="arch" type="xml">
+            <tree string="Section List">
+                <field name="name"/>
+                <field name="class_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_school_section_form" model="ir.ui.view">
+        <field name="name">school.section.form</field>
+        <field name="model">school.section</field>
+        <field name="arch" type="xml">
+            <form string="Section">
+                <group>
+                    <field name="name"/>
+                    <field name="class_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_section" model="ir.actions.act_window">
+        <field name="name">Sections</field>
+        <field name="res_model">school.section</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_school_section" name="Sections" parent="menu_school_root" action="action_school_section"/>
+</odoo>

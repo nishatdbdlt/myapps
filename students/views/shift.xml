@@ -1,0 +1,32 @@
+<odoo>
+    <record id="view_school_shift_tree" model="ir.ui.view">
+        <field name="name">school.shift.tree</field>
+        <field name="model">school.shift</field>
+        <field name="arch" type="xml">
+            <tree string="Shift List">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_school_shift_form" model="ir.ui.view">
+        <field name="name">school.shift.form</field>
+        <field name="model">school.shift</field>
+        <field name="arch" type="xml">
+            <form string="Shift">
+                <group>
+                    <field name="name"/>
+                    <field name="class_ids"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_shift" model="ir.actions.act_window">
+        <field name="name">Shifts</field>
+        <field name="res_model">school.shift</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_school_shift" name="Shifts" parent="menu_school_root" action="action_school_shift"/>
+</odoo>

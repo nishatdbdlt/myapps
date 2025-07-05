@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_challan_user,access_challan_user,model_garment_challan,,1,1,1,1
+access_challan_line_user,access_challan_line_user,model_garment_challan_line,,1,1,1,1
+
+
+access_garment_product_category,access_garment_product_category,model_garment_product_category,,1,1,1,1
+access_garment_product,access_garment_product,model_garment_product,,1,1,1,1
+access_garment_product_category,access_garment_product_category,model_garment_product_category,,1,1,1,1

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Purchase Order Tree View -->
+    <record id="view_garment_purchase_tree" model="ir.ui.view">
+        <field name="name">garment.purchase.tree</field>
+        <field name="model">garment.purchase</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Orders">
+                <field name="name" string="PO Number"/>
+                <field name="vendor_id"/>
+                <field name="order_date"/>
+                <field name="eta" string="Expected Delivery"/>
+                <field name="state" widget="statusbar"/>
+                <field name="total_qty" string="Total Qty"/>
+                <field name="received_percentage" string="Received %"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Purchase Order Form View -->
+    <record id="view_garment_purchase_form" model="ir.ui.view">
+        <field name="name">garment.purchase.form</field>
+        <field name="model">garment.purchase</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,received,canceled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vendor_id"/>
+                            <field name="order_date"/>
+                            <field name="eta"/>
+                        </group>
+                        <group>
+                            <field name="total_qty" readonly="1"/>
+                            <field name="received_percentage" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="received_qty"/>
+                                    <field name="uom_id" readonly="1"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Enter terms and conditions..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_receive"
+                            string="Mark as Received"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_reset_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state in ['draft', 'canceled']"/>
+                    <button name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state == 'canceled'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Purchase Order -->
+    <record id="action_garment_purchase" model="ir.actions.act_window">
+        <field name="name">Purchase Orders</field>
+        <field name="res_model">garment.purchase</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_garment_purchase_id"
+              name="Purchase Orders"
+              parent="garments_root_menu"
+              action="action_garment_purchase"
+              />
+</odoo>

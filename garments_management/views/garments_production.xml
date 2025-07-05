@@ -1,0 +1,58 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_garment_production_tree" model="ir.ui.view">
+        <field name="name">garment.production.tree</field>
+        <field name="model">garment.production</field>
+        <field name="arch" type="xml">
+            <tree string="Production Orders">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="bom_id"/>
+                <field name="quantity"/>
+                <field name="stage"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="team_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_garment_production_form" model="ir.ui.view">
+        <field name="name">garment.production.form</field>
+        <field name="model">garment.production</field>
+        <field name="arch" type="xml">
+            <form string="Production Order">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="bom_id"/>
+                        <field name="quantity"/>
+                        <field name="stage"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="wastage"/>
+                        <field name="team_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_garment_production" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+        <field name="res_model">garment.production</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_garment_production"
+              name="Production Orders"
+              parent="garments_root_menu"
+              action="action_garment_production"
+              sequence="10"/>
+</odoo>

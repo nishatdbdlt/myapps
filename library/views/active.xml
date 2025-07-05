@@ -14,16 +14,14 @@
                     <separator string="Student List" colspan="2"/>
 
                     <group>
-                        <field name="student_ids" nolabel="8">
-                            <tree>
-                                <field name="photo" widget="image" options="{'size': [64, 64]}"/>
+                        <!-- ✅ student_ids field starts here and includes tree inside -->
+                        <field name="student_ids" nolabel="1">
+                            <tree string="Students">
                                 <field name="name"/>
                                 <field name="roll"/>
                                 <field name="phone"/>
+                                <field name="class_id"/>
                                 <field name="section_id"/>
-                                 <field name="is_active"/>
-                                <button name="action_activate_student" type="object" string="Activate" class="btn-primary"/>
-                                 <button name="action_deactivate_student" type="object" string="Deactivate" class="btn-danger"/>
                             </tree>
                         </field>
                     </group>
@@ -46,8 +44,9 @@
               sequence="10"/>
 
     <menuitem id="menu_active_member_id"
-              name=" Members"
+              name="Members"
               parent="menu_library_root"
               action="action_active_member"
               sequence="30"/>
 </odoo>
+

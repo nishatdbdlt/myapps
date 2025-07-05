@@ -1,0 +1,20 @@
+<odoo>
+     <record id="view_library_member_wizard_form" model="ir.ui.view">
+        <field name="name">library.member.wizard.form</field>
+        <field name="model">library.member.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Manage Library Info">
+                <group>
+                    <field name="student_id"/>
+                    <field name="library_id"/>
+                    <field name="temp_library_id"/>
+                    <field name="library_fee"/>
+                </group>
+                <footer>
+                    <button name="action_save_member" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

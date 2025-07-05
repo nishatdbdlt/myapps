@@ -7,7 +7,6 @@ class LibraryBook(models.Model):
 
     name = fields.Char(string='Name', required=True)
     author = fields.Char(string='Author')
-    book_id = fields.Char(string='Book ID')
     price = fields.Float(string='Price')
     quantity = fields.Integer(string='Quantity')
 
@@ -55,15 +54,15 @@ class LibraryBook(models.Model):
     #                 rec.serial_no = index
     #                 break
 
-    def action_view_issued_students(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Issued Students',
-            'view_mode': 'tree,form',
-            'res_model': 'library.issue',
-            'domain': [('book_id', '=', self.id)],
-            'context': {'default_book_id': self.id},
-            'target': 'new',
-        }
-
+    # def action_view_issued_students(self):
+    #     return {
+    #         'type': 'ir.actions.act_window',
+    #         'name': 'Issued Students',
+    #         'view_mode': 'tree,form',
+    #         'res_model': 'library.issue',
+    #         'domain': [('book_id', '=', self.id)],
+    #         'context': {'default_book_id': self.id},
+    #         'target': 'new',
+    #     }
+    #
 
