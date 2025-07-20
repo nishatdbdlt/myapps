@@ -6,6 +6,7 @@
             <tree string="Class List">
                 <field name="name"/>
                 <field name="shift_id"/>
+                        <field name="class_teacher_id"/>  <!-- দেখাচ্ছে ক্লাস–টিচার -->
             </tree>
         </field>
     </record>
@@ -19,6 +20,7 @@
                     <field name="name"/>
                     <field name="shift_id"/>
                     <field name="section_ids"/>
+                            <field name="class_teacher_id"/>  <!-- দেখাচ্ছে ক্লাস–টিচার -->
                 </group>
             </form>
         </field>

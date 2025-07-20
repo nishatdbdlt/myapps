@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_form_smartstock_product" model="ir.ui.view">
+        <field name="name">smartstock.product.form</field>
+        <field name="model">smartstock.product</field>
+        <field name="arch" type="xml">
+            <form string="Smart Product">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sku"/>
+                        <field name="category_id"/>
+                        <field name="quantity_on_hand"/>
+                        <field name="minimum_qty"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_smartstock_product" model="ir.ui.view">
+        <field name="name">smartstock.product.tree</field>
+        <field name="model">smartstock.product</field>
+        <field name="arch" type="xml">
+            <tree string="Smart Product">
+                <field name="name"/>
+                <field name="sku"/>
+                <field name="category_id"/>
+                <field name="quantity_on_hand"/>
+                <field name="minimum_qty"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_smartstock_product" model="ir.actions.act_window">
+        <field name="name">Smart Products</field>
+        <field name="res_model">smartstock.product</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="smartstock_menu_root" name="SmartStock" sequence="1"/>
+    <menuitem id="smartstock_menu_product" name="Products" parent="smartstock_menu_root" action="action_smartstock_product"/>
+</odoo>

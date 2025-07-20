@@ -1,47 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- QWeb Report Template -->
-    <template id="report_student_wizard_pdf_template">
-        <t t-call="web.external_layout">
-            <div class="page">
-                <h2>Student List - Filtered</h2>
-                <p><strong>Shift:</strong> <span t-esc="doc.shift_id.name"/></p>
-                <p><strong>Class:</strong> <span t-esc="doc.class_id.name"/></p>
-                <p><strong>Section:</strong> <span t-esc="doc.section_id.name"/></p>
+  <!-- QWeb PDF Template -->
+  <template id="report_student_wizard_pdf_template">
+    <t t-call="web.html_container">
+      <t t-call="web.external_layout">
+        <!-- Loop through each wizard record -->
+        <t t-foreach="docs" t-as="doc">
+          <!-- Define env objects -->
+          <t t-set="company" t-value="env.company"/>
+          <t t-set="students" t-value="env['school.student'].search([
+              ('shift_id','=',doc.shift_id.id),
+              ('class_id','=',doc.class_id.id),
+              ('section_id','=',doc.section_id.id)
+            ])"/>
 
-                <t t-set="students" t-value="docs.env['school.student'].search([
-                    ('shift_id','=',doc.shift_id.id),
-                    ('class_id','=',doc.class_id.id),
-                    ('section_id','=',doc.section_id.id)
-                ])"/>
+          <div class="page container py-3" style="font-family: Arial, sans-serif;">
 
-                <table class="table table-sm mt16">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Roll</th>
-                            <th>Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr t-foreach="students" t-as="student">
-                            <td><span t-esc="student.name"/></td>
-                            <td><span t-esc="student.roll"/></td>
-                            <td><span t-esc="student.phone"/></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Header: logo + company name in one line -->
+         <!-- Header: logo left + company info center -->
+<div class="d-flex justify-content-start align-items-center mb-4" style="position: relative;">
+  <!-- Logo -->
+  <div style="flex: 0 0 auto; margin-right: 20px;">
+    <t t-if="company.logo">
+      <img t-att-src="'data:image/png;base64,' + company.logo.decode('utf-8')"
+           alt="Company Logo"
+           style="height: 100px;"/>
+    </t>
+  </div>
+
+  <!-- Company Info: centered absolutely -->
+  <div style="position: absolute; left: 0; right: 0; text-align: center;">
+    <h2 class="h4 mb-1"><t t-esc="company.name"/></h2>
+    <p class="small text-muted mb-0">
+      <t t-esc="company.street"/>
+      <t t-if="company.street2">, <t t-esc="company.street2"/></t><br/>
+      <t t-esc="company.phone"/> – <t t-esc="company.email"/><br/>
+      <t t-esc="company.state_id.name"/>, <t t-esc="company.country_id.name"/>
+    </p>
+  </div>
+</div>
+
+
+            <!-- Section Info Banner -->
+            <div class="row mb-3">
+              <div class="col text-center bg-light py-2">
+                <strong>Student List –</strong>
+                <span>Shift: <t t-esc="doc.shift_id.shift_name"/></span> |
+                <span>Class: <t t-esc="doc.class_id.name"/></span> |
+                <span>Section: <t t-esc="doc.section_id.name"/></span>
+              </div>
             </div>
-        </t>
-    </template>
 
-    <!-- Report Action -->
-    <report
-        id="report_student_wizard_pdf"
-        model="library.student.wizard"
-        string="Student Filter PDF"
-        report_type="qweb-pdf"
-        name="students.report_student_wizard_pdf_template"
-        file="students.report_student_wizard_pdf_template"
-        print_report_name="'Student_Report_' + object.shift_id.name"
-    />
+            <!-- Students Table -->
+            <div class="table-responsive mb-3">
+              <table class="table table-sm table-bordered">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Roll</th>
+                    <th>Phone</th>
+                    <th>Photo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="students" t-as="student">
+                    <tr>
+                      <td><t t-esc="student.name"/></td>
+                      <td><t t-esc="student.roll"/></td>
+                      <td><t t-esc="student.phone"/></td>
+                      <td class="text-center">
+                        <t t-if="student.photo">
+                          <img
+                            t-att-src="'data:image/png;base64,%s' % student.photo"
+                            class="img-fluid rounded"
+                            style="max-height: 40px; max-width: 40px;"
+                          />
+                        </t>
+                        <t t-else="">N/A</t>
+                      </td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Total Students -->
+            <div class="row">
+              <div class="col text-right">
+                <p class="mb-0"><strong>Total Students:</strong> <t t-esc="len(students)"/></p>
+              </div>
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+
+  <!-- Report Action -->
+  <record id="action_report_student" model="ir.actions.report">
+    <field name="name">Student Report</field>
+    <field name="model">library.student.wizard</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">students.report_student_wizard_pdf_template</field>
+    <field name="report_file">students.report_student_wizard_pdf_template</field>
+    <field name="binding_model_id" ref="students.model_library_student_wizard"/>
+    <field name="binding_type">report</field>
+    <field name="print_report_name">'Student Report - %s' % (object.shift_id.shift_name or '')</field>
+  </record>
 </odoo>

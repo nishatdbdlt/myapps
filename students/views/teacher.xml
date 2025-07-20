@@ -1,0 +1,57 @@
+<odoo>
+  <!-- 1) Root School Menu -->
+
+  <!-- 2) Tree View for Teacher -->
+  <record id="view_school_teacher_tree" model="ir.ui.view">
+    <field name="name">school.teacher.tree</field>
+    <field name="model">school.teacher</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="phone"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- 3) Form View for Teacher -->
+  <record id="view_school_teacher_form" model="ir.ui.view">
+    <field name="name">school.teacher.form</field>
+    <field name="model">school.teacher</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="phone"/>
+            <field name ='email'/>
+            <field name="photo" widget="image"/>
+          </group>
+          <notebook>
+            <page string="Subjects">
+              <field name="subject_ids">
+                <tree editable="bottom">
+                  <field name="name"/>
+                  <field name="class_id"/>
+                  <field name="section_id"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- 4) Action for Teacher Menu -->
+  <record id="action_school_teacher" model="ir.actions.act_window">
+    <field name="name">Teachers</field>
+    <field name="res_model">school.teacher</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- 5) Menu Item under School Root -->
+  <menuitem id="school_teacher"
+            name="Teachers"
+            parent="menu_school_root"
+            action="action_school_teacher"/>
+</odoo>
