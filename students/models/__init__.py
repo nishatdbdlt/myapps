@@ -11,3 +11,4 @@ from . import class_report
 from . import report_line
 from . import  teacher
 from . import subject
+from . import  student_id

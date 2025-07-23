@@ -34,3 +34,4 @@ def _onchange_class_id(self):
 
 
 
+# models/school_student.py

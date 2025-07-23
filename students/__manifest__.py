@@ -39,6 +39,8 @@ Long description of module's purpose
         'views/subject.xml',
         'views/class_report.xml',
         'views/class_teacher.xml',
+        'views/student_id_template.xml',
+        'views/student_id.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

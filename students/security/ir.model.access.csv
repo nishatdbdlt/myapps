@@ -16,3 +16,5 @@ access_class_report_line,access.class.report.line,model_class_report_line,,1,1,1
 
 access_school_subject,access.school.subject,model_school_subject,,1,1,1,1
 access_school_teacher,access.school.teacher,model_school_teacher,,1,1,1,1
+access_student_id_card_wizard,access_student_id_card_wizard,model_student_id_card_wizard,,1,1,1,1
+
