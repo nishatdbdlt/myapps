@@ -1,0 +1,49 @@
+<odoo>
+  <!-- 1) Action for Subjects -->
+  <record id="action_school_subject" model="ir.actions.act_window">
+    <field name="name">Subjects</field>
+    <field name="res_model">school.subject</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- 2) Tree View for Subject -->
+  <record id="view_school_subject_tree" model="ir.ui.view">
+    <field name="name">school.subject.tree</field>
+    <field name="model">school.subject</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="class_id"/>
+        <field name="section_id"/>
+        <field name="teacher_id"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- 3) Form View for Subject -->
+  <record id="view_school_subject_form" model="ir.ui.view">
+    <field name="name">school.subject.form</field>
+    <field name="model">school.subject</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="class_id"/>
+            <field name="section_id"/>
+            <field name="teacher_id"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- 4) Menu Item under Configuration -->
+  <menuitem
+    id="menu_school_subject"
+    name="Subjects"
+    parent="menu_school_root"
+    sequence="20"
+    action="action_school_subject"
+  />
+</odoo>

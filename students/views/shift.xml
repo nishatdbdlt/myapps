@@ -4,7 +4,7 @@
         <field name="model">school.shift</field>
         <field name="arch" type="xml">
             <tree string="Shift List">
-                <field name="name"/>
+                <field name="shift_name"/>
             </tree>
         </field>
     </record>
@@ -15,7 +15,7 @@
         <field name="arch" type="xml">
             <form string="Shift">
                 <group>
-                    <field name="name"/>
+                    <field name="shift_name"/>
                     <field name="class_ids"/>
                 </group>
             </form>

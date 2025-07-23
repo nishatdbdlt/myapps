@@ -30,6 +30,17 @@ Long description of module's purpose
         'views/student.xml',
         'views/shift.xml',
         'views/section.xml',
+        'views/student_wizard_report.xml',
+        'views/blood.xml',
+        'views/hide.xml',
+        'views/blood_group.xml',
+        'views/class_report.xml',
+        'views/teacher.xml',
+        'views/subject.xml',
+        'views/class_report.xml',
+        'views/class_teacher.xml',
+        'views/student_id_template.xml',
+        'views/student_id.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

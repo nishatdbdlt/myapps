@@ -26,6 +26,8 @@
                     <field name="class_id"/>
                     <field name="section_id"/>
                     <field name="phone"/>
+                    <field name="blood_group"/>
+                    <field name="photo" widget="image" options="{'size': [50, 50]}" />
                 </group>
             </form>
         </field>

@@ -1,4 +1,4 @@
-# garment_management/models/product.py
+# garment_management/models/inventory_product.py
 from odoo import models, fields
 
 class GarmentProductCategory(models.Model):

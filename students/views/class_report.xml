@@ -1,0 +1,46 @@
+<odoo>
+  <!-- Wizard Action -->
+  <record id="action_class_report_wizard" model="ir.actions.act_window">
+    <field name="name">Class Report</field>
+    <field name="res_model">class.report.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+  <!-- Menu Item -->
+  <menuitem id="menu_class_report" name="Class Report" parent="menu_school_root" action="action_class_report_wizard"/>
+
+  <!-- Wizard Form View -->
+  <record id="view_class_report_wizard" model="ir.ui.view">
+    <field name="name">class.report.wizard.form</field>
+    <field name="model">class.report.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Class Report Wizard">
+        <group>
+          <field name="class_id"/>
+          <field name="section_id"/>
+          <field name="class_teacher_id" readonly="1"/>
+        </group>
+
+        <separator string="Subjects  Teachers"/>
+
+        <field name="line_ids">
+          <tree editable="bottom">
+            <field name="subject_id"/>
+            <field name="teacher_id"/>
+          </tree>
+        </field>
+
+        <footer>
+          <button name="action_get_report"
+                  string="Print PDF"
+                  type="object"
+                  class="btn-primary"/>
+          <button string="Close"
+                  special="cancel"
+                  class="btn-secondary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

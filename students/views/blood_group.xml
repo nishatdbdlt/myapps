@@ -1,0 +1,101 @@
+<odoo>
+  <!-- QWeb PDF Template -->
+  <template id="report_filtered_students_template">
+    <t t-call="web.html_container">
+      <t t-call="web.external_layout">
+        <!-- Loop through each record -->
+        <t t-foreach="docs" t-as="doc">
+          <!-- Define company once per loop -->
+          <t t-set="company" t-value="env.company"/>
+            <div class="page container" style="padding-top: -10px; padding-bottom: 30px; font-family: Arial, sans-serif;">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-start align-items-center mb-4" style="position: relative;">
+  <!-- Logo -->
+  <div style="flex: 0 0 auto; margin-right: 20px;">
+    <t t-if="company.logo">
+      <img t-att-src="'data:image/png;base64,' + company.logo.decode('utf-8')"
+           alt="Company Logo"
+           style="height: 100px;"/>
+    </t>
+  </div>
+
+  <!-- Company Info: centered absolutely -->
+  <div style="position: absolute; left: 0; right: 0; text-align: center;">
+    <h2 class="h4 mb-1"><t t-esc="company.name"/></h2>
+    <p class="small text-muted mb-0">
+      <t t-esc="company.street"/>
+      <t t-if="company.street2">, <t t-esc="company.street2"/></t><br/>
+      <t t-esc="company.phone"/> – <t t-esc="company.email"/><br/>
+      <t t-esc="company.state_id.name"/>, <t t-esc="company.country_id.name"/>
+    </p>
+  </div>
+</div>
+
+
+            <!-- Report Title -->
+            <div class="text-center mb-4">
+              <h3 class="h5 text-dark mb-0">🎓 Filtered Students Blood Report</h3>
+            </div>
+
+            <!-- Filter Info -->
+            <div class="row mb-3">
+              <div class="col text-center small">
+                <strong>Shift:</strong> <t t-esc="doc.shift_id.shift_name"/> |
+                <strong>Class:</strong> <t t-esc="doc.class_id.name"/> |
+                <strong>Section:</strong> <t t-esc="doc.section_id.name"/> |
+                <strong>Blood Group:</strong> <t t-esc="doc.blood_group"/>
+              </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered small mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Roll</th>
+                    <th>Phone</th>
+                    <th>Shift</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Blood</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="doc.student_ids" t-as="student">
+                    <tr>
+                      <td><t t-esc="student.name"/></td>
+                      <td><t t-esc="student.roll"/></td>
+                      <td><t t-esc="student.phone"/></td>
+                      <td><t t-esc="student.shift_id.shift_name"/></td>
+                      <td><t t-esc="student.class_id.name"/></td>
+                      <td><t t-esc="student.section_id.name"/></td>
+                      <td><t t-esc="student.blood_group"/></td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer Info -->
+            <div class="row mt-3">
+              <div class="col text-right small">
+                <strong>Total Students:</strong> <t t-esc="len(doc.student_ids)"/>
+              </div>
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+
+  <!-- Report Action -->
+  <record id="action_report_filtered_students" model="ir.actions.report">
+    <field name="name">Filtered Students Report</field>
+    <field name="model">student.filter.wizard</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">students.report_filtered_students_template</field>
+    <field name="report_file">students.report_filtered_students_template</field>
+  </record>
+</odoo>

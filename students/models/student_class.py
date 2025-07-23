@@ -8,3 +8,10 @@ class SchoolClass(models.Model):
     name = fields.Char(string="Class Name", required=True)
     shift_id = fields.Many2one('school.shift', string="Shift", required=True)
     section_ids = fields.One2many('school.section', 'class_id', string="Sections")
+
+    class_teacher_id = fields.Many2one(
+        'school.teacher',
+        string='Class Teacher',
+        help='The teacher responsible for this class'
+    )
+

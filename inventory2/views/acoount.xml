@@ -1,0 +1,18 @@
+<!-- custom_erp/views/sale_order_views.xml -->
+<odoo>
+  <record id="view_order_form_inherit_deadline" model="ir.ui.view">
+    <field name="name">sale.order.form.inherit.deadline</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+      <sheet position="inside">
+        <group string="Custom Fields">
+          <field name="delivery_deadline"/>
+        </group>
+      </sheet>
+    </field>
+  </record>
+
+  <!-- security/ir.model.access.csv এর আগেই এটি লোড করতে হবে -->
+
+</odoo>
