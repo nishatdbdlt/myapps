@@ -2,7 +2,7 @@
 {
     'name': "library_management",
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
+    'summary': "Short's purpose",
 
     'description': """
 Long description of module's purpose
@@ -22,9 +22,10 @@ Long description of module's purpose
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/library_category.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

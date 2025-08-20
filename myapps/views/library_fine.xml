@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Fine Form View -->
+        <record id="view_library_fine_form" model="ir.ui.view">
+            <field name="name">library.fine.form</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <form string="Library Fine">
+                    <header>
+                        <button name="action_confirm_fine" type="object"
+                                string="Confirm Fine" class="oe_highlight"
+                                />
+                        <button name="action_collect_payment" type="object"
+                                string="Collect Payment" class="oe_highlight"
+                                />
+                        <button name="action_waive_fine" type="object"
+                                string="Waive Fine"
+                        />
+                        <button name="action_cancel" type="object"
+                                string="Cancel"
+
+                                confirm="Are you sure you want to cancel this fine?"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirmed,paid"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"/>
+<!--                            <button class="oe_stat_button" type="object"-->
+<!--                                    name="action_view_member_details" icon="fa-user"-->
+<!--                                    attrs="{'invisible': [('member_id', '=', False)]}">-->
+<!--                                <div class="o_field_widget o_stat_info">-->
+<!--                                    <span class="o_stat_text">View Member</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                            <button class="oe_stat_button" type="object"-->
+<!--                                    name="action_view_book_details" icon="fa-book"-->
+<!--                                    attrs="{'invisible': [('book_id', '=', False)]}">-->
+<!--                                <div class="o_field_widget o_stat_info">-->
+<!--                                    <span class="o_stat_text">View Book</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                            <button class="oe_stat_button" type="object"-->
+<!--                                    name="action_view_borrow_record" icon="fa-exchange"-->
+<!--                                    >-->
+<!--                                <div class="o_field_widget o_stat_info">-->
+<!--                                    <span class="o_stat_text">View Borrow</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                        </div>-->
+
+                        <widget name="web_ribbon" title="Overdue Payment"
+                                bg_color="bg-danger"
+                                />
+
+                        <widget name="web_ribbon" title="Waived"
+                                bg_color="bg-warning"
+                                />
+
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+
+                        <group>
+                            <group name="fine_info" string="Fine Information">
+                                <field name="fine_type"/>
+                                <field name="member_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="book_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="borrow_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="return_id" options="{'no_create': True, 'no_create_edit': True}"
+                                       />
+                            </group>
+                            <group name="amount_info" string="Amount Information">
+                                <field name="amount"/>
+                                <field name="paid_amount" />
+                                <field name="remaining_amount" readonly="1"/>
+                                <field name="date_created"/>
+                                <field name="due_date"/>
+                            </group>
+                        </group>
+
+                        <group name="payment_info" string="Payment Information"
+                               >
+                            <group>
+                                <field name="payment_date" readonly="1"/>
+                                <field name="payment_method" readonly="1"/>
+                                <field name="payment_reference" readonly="1"/>
+                                <field name="collected_by" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group name="waiver_info" string="Waiver Information"
+                               >
+                            <group>
+                                <field name="waived" readonly="1"/>
+                                <field name="waived_date" readonly="1"/>
+                                <field name="waived_by" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="waived_reason" readonly="1" nolabel="1"
+                                       placeholder="Waiver reason..."/>
+                            </group>
+                        </group>
+
+                        <notebook>
+<!--                            <page string="Description" name="description">-->
+<!--                                <field name="description" placeholder="Fine description and details..."/>-->
+<!--                            </page>-->
+                            <page string="Internal Notes" name="notes">
+                                <field name="notes" placeholder="Internal notes for staff..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Fine Tree View -->
+        <record id="view_library_fine_tree" model="ir.ui.view">
+            <field name="name">library.fine.tree</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <tree string="Library Fines"
+                      decoration-info="state=='confirmed'"
+                      decoration-success="state=='paid'"
+                      decoration-warning="state=='partial'"
+                      decoration-danger="state=='confirmed' and due_date &lt; current_date"
+                      decoration-muted="state in ['cancelled', 'waived']">
+                    <field name="name"/>
+                    <field name="fine_type"/>
+                    <field name="member_id"/>
+                    <field name="book_id"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="paid_amount" sum="Total Paid"/>
+                    <field name="remaining_amount" sum="Total Remaining"/>
+                    <field name="date_created"/>
+                    <field name="due_date"/>
+                    <field name="payment_date"/>
+                    <field name="state" widget="badge"/>
+                    <field name="waived" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Fine Kanban View -->
+        <record id="view_library_fine_kanban" model="ir.ui.view">
+            <field name="name">library.fine.kanban</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="o_kanban_small_column">
+                    <field name="name"/>
+                    <field name="fine_type"/>
+                    <field name="member_id"/>
+                    <field name="book_id"/>
+                    <field name="amount"/>
+                    <field name="remaining_amount"/>
+                    <field name="state"/>
+                    <field name="due_date"/>
+                    <field name="waived"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div><strong>Type:</strong> <field name="fine_type"/></div>
+                                        <div><strong>Member:</strong> <field name="member_id"/></div>
+                                        <div t-if="record.book_id.raw_value"><strong>Book:</strong> <field name="book_id"/></div>
+                                        <div><strong>Amount:</strong> <field name="amount"/> BDT</div>
+                                        <div t-if="record.remaining_amount.raw_value > 0" class="text-danger">
+                                            <strong>Remaining:</strong> <field name="remaining_amount"/> BDT
+                                        </div>
+                                        <div t-if="record.due_date.raw_value" class="text-muted">
+                                            <strong>Due:</strong> <field name="due_date"/>
+                                        </div>
+                                        <div t-if="record.waived.raw_value" class="text-warning">
+                                            <i class="fa fa-check"/> Waived
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Fine Search View -->
+        <record id="view_library_fine_search" model="ir.ui.view">
+            <field name="name">library.fine.search</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <search string="Search Library Fines">
+                    <field name="name" string="Reference"/>
+                    <field name="member_id"/>
+                    <field name="book_id"/>
+                    <field name="fine_type"/>
+                    <field name="amount"/>
+<!--                    <field name="description"/>-->
+
+                    <filter string="Draft" name="draft"
+                            domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmed" name="confirmed"
+                            domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Paid" name="paid"
+                            domain="[('state', '=', 'paid')]"/>
+                    <filter string="Partially Paid" name="partial"
+                            domain="[('state', '=', 'partial')]"/>
+                    <filter string="Waived" name="waived"
+                            domain="[('state', '=', 'waived')]"/>
+                    <filter string="Cancelled" name="cancelled"
+                            domain="[('state', '=', 'cancelled')]"/>
+
+                    <separator/>
+                    <filter string="Unpaid" name="unpaid"
+                            domain="[('remaining_amount', '>', 0), ('state', 'not in', ['waived', 'cancelled'])]"/>
+                    <filter string="Overdue Payment" name="overdue_payment"
+                            domain="[('due_date', '&lt;', context_today()), ('state', 'in', ['confirmed', 'partial'])]"/>
+
+                    <separator/>
+                    <filter string="Overdue Fine" name="overdue_fine"
+                            domain="[('fine_type', '=', 'overdue')]"/>
+                    <filter string="Damage Fine" name="damage_fine"
+                            domain="[('fine_type', '=', 'damage')]"/>
+                    <filter string="Lost Book Fine" name="lost_fine"
+                            domain="[('fine_type', '=', 'lost')]"/>
+
+                    <separator/>
+                    <filter string="This Month" name="this_month"
+                            domain="[('date_created', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                    <filter string="This Year" name="this_year"
+                            domain="[('date_created', '&gt;=', (context_today()).strftime('%Y-01-01'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_by_state"
+                                context="{'group_by': 'state'}"/>
+                        <filter string="Fine Type" name="group_by_fine_type"
+                                context="{'group_by': 'fine_type'}"/>
+                        <filter string="Member" name="group_by_member"
+                                context="{'group_by': 'member_id'}"/>
+                        <filter string="Book" name="group_by_book"
+                                context="{'group_by': 'book_id'}"/>
+                        <filter string="Creation Date" name="group_by_date_created"
+                                context="{'group_by': 'date_created:month'}"/>
+                        <filter string="Payment Date" name="group_by_payment_date"
+                                context="{'group_by': 'payment_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Fine Calendar View -->
+
+
+        <!-- Fine Pivot View -->
+        <record id="view_library_fine_pivot" model="ir.ui.view">
+            <field name="name">library.fine.pivot</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <pivot string="Fine Analysis">
+                    <field name="fine_type" type="row"/>
+                    <field name="state" type="row"/>
+                    <field name="date_created" type="col" interval="month"/>
+                    <field name="amount" type="measure"/>
+                    <field name="paid_amount" type="measure"/>
+                    <field name="remaining_amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Fine Graph View -->
+        <record id="view_library_fine_graph" model="ir.ui.view">
+            <field name="name">library.fine.graph</field>
+            <field name="model">library.fine</field>
+            <field name="arch" type="xml">
+                <graph string="Fine Statistics">
+                    <field name="date_created" type="row" interval="month"/>
+                    <field name="amount" type="measure"/>
+                    <field name="paid_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Fine Action Window -->
+        <record id="action_library_fine" model="ir.actions.act_window">
+            <field name="name">Library Fines</field>
+            <field name="res_model">library.fine</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_library_fine_search"/>
+            <field name="context">{'search_default_unpaid': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first fine record!
+                </p>
+                <p>
+                    Track library fines for overdue books, damages, lost books and other penalties.
+                </p>
+            </field>
+        </record>
+
+        <!-- Unpaid Fines Action -->
+        <record id="action_library_fine_unpaid" model="ir.actions.act_window">
+            <field name="name">Unpaid Fines</field>
+            <field name="res_model">library.fine</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('remaining_amount', '>', 0), ('state', 'not in', ['waived', 'cancelled'])]</field>
+            <field name="context">{'search_default_confirmed': 1, 'search_default_partial': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Great! No unpaid fines!
+                </p>
+                <p>
+                    This view shows all fines that have outstanding payments.
+                </p>
+            </field>
+        </record>
+
+        <!-- Overdue Payment Fines Action -->
+        <record id="action_library_fine_overdue_payment" model="ir.actions.act_window">
+            <field name="name">Overdue Payments</field>
+            <field name="res_model">library.fine</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('due_date', '&lt;', context_today()), ('state', 'in', ['confirmed', 'partial'])]</field>
+            <field name="context">{'search_default_overdue_payment': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Excellent! No overdue payments!
+                </p>
+                <p>
+                    This view shows fines with overdue payment dates that require attention.
+                </p>
+            </field>
+        </record>
+
+        <!-- Fine History Action -->
+        <record id="action_library_fine_history" model="ir.actions.act_window">
+            <field name="name">Fine History</field>
+            <field name="res_model">library.fine</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">[('state', 'in', ['paid', 'waived', 'cancelled'])]</field>
+            <field name="context">{'search_default_paid': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No fine history yet!
+                </p>
+                <p>
+                    This view shows all completed fine transactions.
+                </p>
+            </field>
+        </record>
+
+        <!-- Sequence for Fine Reference -->
+        <record id="sequence_library_fine" model="ir.sequence">
+            <field name="name">Library Fine Sequence</field>
+            <field name="code">library.fine</field>
+            <field name="prefix">FINE/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <menuitem id="menu_library_reports"
+                  name="Reports"
+                  parent="menu_library_root"
+                  sequence="60"/>
+
+<!--        <menuitem id="menu_library_report_books"-->
+<!--                  name="Book Reports"-->
+<!--                  parent="menu_library_root"-->
+<!--                  action="action_library_fine"-->
+<!--                  sequence="1"/>-->
+
+<!--        <menuitem id="menu_library_report_members"-->
+<!--                  name="Member Reports"-->
+<!--                  parent="menu_library_report_books"-->
+<!--                  action="action_library_member_report"-->
+<!--                  sequence="2"/>-->
+
+<!--        <menuitem id="menu_library_report_borrowing"-->
+<!--                  name="Borrowing Reports"-->
+<!--                  parent="menu_library_reports"-->
+<!--                  action="action_library_borrow_report"-->
+<!--                  sequence="3"/>-->
+
+        <menuitem id="menu_library_report_fines"
+                  name="Fine Reports"
+                  parent="menu_library_reports"
+                  action="action_library_fine_overdue_payment"
+                  sequence="4"/>
+
+    </data>
+</odoo>

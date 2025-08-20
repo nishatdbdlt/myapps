@@ -1,0 +1,27 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_library_category,access_library_category,model_library_category,,1,1,1,1
+
+access_library_author,access_library_author,model_library_author,,1,1,1,1
+
+access_library_book,access_library_book,model_library_book,,1,1,1,1
+
+access_library_member,access_library_member,model_library_member,,1,1,1,1
+
+access_library_borrow,access_library_borrow,model_library_borrow,,1,1,1,1
+
+access_library_return,access_library_return,model_library_return,,1,1,1,1
+
+access_library_fine,access_library_fine,model_library_fine,,1,1,1,1
+
+access_library_publisher_user,access.library.publisher.user,model_library_publisher,base.group_user,1,1,1,1
+access_library_fine_user,Library Fine User,model_library_fine,base.group_user,1,1,1,1
+
+access_library_fine_waive_wizard_user,library.fine.waive.wizard.user,model_library_fine_waive_wizard,base.group_user,1,1,1,1
+
+access_library_extend_wizard_manager,library.extend.wizard.manager,model_library_extend_wizard,base.group_system,1,1,1,1
+
+
+
+
+

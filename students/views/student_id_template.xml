@@ -1,0 +1,84 @@
+<odoo>
+ 
+  <template id="student_id_card_template">
+    <t t-call="web.basic_layout">
+      <t t-set="doc" t-value="docs[0]"/>
+      <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+        <!-- ID Card Container -->
+        <div class="card shadow border"
+             style="width: 110mm; height: 70mm; padding: 10px; font-size: 11px;
+                    border-radius: 8px; background-color: #f4f6f8; color: #222;">
+
+          <!-- Header: School Name + Logo -->
+          <div style="background-color: #004080; color: white; padding: 6px; border-radius: 6px 6px 0 0;">
+            <div class="text-center">
+              <t t-if="res_company.logo">
+                <img t-att-src="'data:image/png;base64,%s' % res_company.logo"
+                     style="height: 30px; margin-bottom: 3px;" />
+              </t>
+              <div style="font-size: 14px; font-weight: bold;">
+                <t t-esc="res_company.name"/>
+              </div>
+              <div style="font-size: 9px;">Student ID Card</div>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body p-1">
+            <div class="d-flex" style="margin-top: 8px;">
+              <!-- Student Photo -->
+              <div style="flex: 1; text-align: center;">
+                <t t-if="doc.student_id.photo">
+                  <img t-att-src="'data:image/png;base64,%s' % doc.student_id.photo"
+                       class="rounded-circle border"
+                       style="height: 65px; width: 65px; object-fit: cover; border: 2px solid #004080;" />
+                </t>
+              </div>
+
+              <!-- Student Info with Colors -->
+              <div style="flex: 2; padding-left: 10px;">
+                <p class="mb-1"><span style="color: #004080; font-weight: 600;">Name:</span>
+                  <span style="color: #000;"> <t t-esc="doc.student_id.name"/></span></p>
+
+                <p class="mb-1"><span style="color: #008000; font-weight: 600;">Roll:</span>
+                  <span style="color: #000;"> <t t-esc="doc.student_id.roll"/></span></p>
+
+                <p class="mb-1"><span style="color: #800080; font-weight: 600;">Class:</span>
+                  <span style="color: #000;"> <t t-esc="doc.student_id.class_id.name"/></span></p>
+
+                <p class="mb-1"><span style="color: #e67e22; font-weight: 600;">Section:</span>
+                  <span style="color: #000;"> <t t-esc="doc.student_id.section_id.name"/></span></p>
+
+                <p class="mb-1"><span style="color: #c0392b; font-weight: 600;">Shift:</span>
+                  <span style="color: #000;"> <t t-esc="doc.student_id.shift_id.shift_name"/></span></p>
+              </div>
+            </div>
+
+            <!-- Footer Line -->
+            <div style="border-top: 1px dashed #999; margin: 8px 0;"></div>
+
+            <!-- Footer -->
+            <div class="text-center" style="font-size: 9px; color: #555;">
+              Powered by Your School ERP
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </t>
+  </template>
+
+
+
+
+  <record id="action_report_student_id" model="ir.actions.report">
+    <field name="name">Student ID Card</field>
+    <field name="model">student.id.card.wizard</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">students.student_id_card_template</field>
+    <field name="report_file">students.student_id_card_template</field>
+    <field name="binding_model_id" ref="model_student_id_card_wizard"/>
+    <field name="print_report_name">'Student_ID_Card'</field>
+  </record>
+</odoo>

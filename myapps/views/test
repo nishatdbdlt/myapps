@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_library_book_tree" model="ir.ui.view">
+        <field name="name">library.book.tree</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree string="Library Books">
+                <field name="book_code"/>
+                <field name="name"/>
+                <field name="author_id"/>
+                <field name="category_id"/>
+                <field name="publication_date"/>
+                <field name="state"/>
+                <field name="price"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_book_form" model="ir.ui.view">
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form string="Library Book">
+                <sheet>
+                    <group>
+                        <field name="book_code" readonly="1"/>
+                        <field name="name"/>
+                        <field name="isbn"/>
+                        <field name="author_id"/>
+<!--                        <field name="publisher_id"/>-->
+                        <field name="category_id"/>
+                        <field name="edition"/>
+                        <field name="pages"/>
+                        <field name="language"/>
+                        <field name="publication_date"/>
+                        <field name="price"/>
+                        <field name="rack_location"/>
+                        <field name="barcode"/>
+                        <field name="book_cover"/>
+                        <field name="state"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+<!--                <footer>-->
+<!--                    <button string="Borrow Book" type="object" name="action_borrow_book" class="btn-primary"/>-->
+<!--                    <button string="Return Book" type="object" name="action_return_book" class="btn-secondary"/>-->
+<!--                    <button string="Reserve Book" type="object" name="action_reserve_book" class="btn-warning"/>-->
+<!--                </footer>-->
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_book" model="ir.actions.act_window">
+        <field name="name">Library Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_library_root" name="Library"/>
+    <menuitem id="menu_library_books" name="Books" parent="menu_library_root" action="action_library_book"/>
+
+</odoo>
+
+
+
+
