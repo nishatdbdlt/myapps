@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sales_kpi_tree" model="ir.ui.view">
+        <field name="name">sales.kpi.tree</field>
+        <field name="model">sales.kpi</field>
+        <field name="arch" type="xml">
+            <tree string="Sales KPI" decoration-danger="sales_variance &lt; 0">
+                <field name="date"/>
+                <field name="team_id"/>
+                <field name="sales_goal" widget="monetary"/>
+                <field name="actual_sales" widget="monetary"/>
+                <field name="sales_variance" widget="monetary"/>
+                <field name="operation_goal" widget="monetary"/>
+                <field name="actual_operation" widget="monetary"/>
+                <field name="operation_balance" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sales_kpi_form" model="ir.ui.view">
+        <field name="name">sales.kpi.form</field>
+        <field name="model">sales.kpi</field>
+        <field name="arch" type="xml">
+            <form string="Sales KPI">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="team_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Sales Information">
+                            <group>
+                                <group string="Sales Goals">
+                                    <field name="sales_goal"/>
+                                    <field name="actual_sales"/>
+                                    <field name="sales_variance"/>
+                                    <field name="sales_balance"/>
+                                    <field name="accumulated_sales_balance"/>
+                                </group>
+                                <group string="Revenue">
+                                    <field name="green_revenue"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Operations">
+                            <group>
+                                <group string="Operation Goals">
+                                    <field name="operation_goal"/>
+                                    <field name="actual_operation"/>
+                                    <field name="operation_balance"/>
+                                    <field name="accumulated_operation_balance"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Special Orders">
+                            <group>
+                                <group>
+                                    <field name="cancelled_order"/>
+                                    <field name="internal_special_order"/>
+                                    <field name="forward_sales"/>
+                                </group>
+                                <group>
+                                    <field name="wip_nra"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Delivery &amp; Invoice">
+                            <group>
+                                <group>
+                                    <field name="delivered"/>
+                                    <field name="fully_invoiced"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_sales_kpi_pivot" model="ir.ui.view">
+        <field name="name">sales.kpi.pivot</field>
+        <field name="model">sales.kpi</field>
+        <field name="arch" type="xml">
+            <pivot string="KPI Analysis">
+                <field name="team_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="sales_goal" type="measure"/>
+                <field name="actual_sales" type="measure"/>
+                <field name="sales_variance" type="measure"/>
+                <field name="operation_balance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sales_kpi_tree" model="ir.actions.act_window">
+        <field name="name">Sales KPI</field>
+        <field name="res_model">sales.kpi</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first KPI record
+            </p>
+        </field>
+    </record>
+</odoo>
