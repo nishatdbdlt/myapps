@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_hospital_room_tree" model="ir.ui.view">
+            <field name="name">hospital.room.tree</field>
+            <field name="model">hospital.room</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="room_type"/>
+                    <field name="department_id"/>
+                    <field name="floor"/>
+                    <field name="capacity"/>
+                    <field name="state"/>
+                    <field name="daily_rent"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hospital_room_form" model="ir.ui.view">
+            <field name="name">hospital.room.form</field>
+            <field name="model">hospital.room</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="room_type"/>
+                            <field name="department_id"/>
+                            <field name="floor"/>
+                            <field name="capacity"/>
+                            <field name="state"/>
+                            <field name="daily_rent"/>
+                            <field name="facilities"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_hospital_room" model="ir.actions.act_window">
+            <field name="name">Hospital Rooms</field>
+            <field name="res_model">hospital.room</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_hospital_root" name="Hospital"/>
+        <menuitem id="menu_hospital_rooms" name="Rooms" parent="menu_hospital_root" action="action_hospital_room"/>
+    </data>
+</odoo>

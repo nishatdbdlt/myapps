@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_pre_sales_tree" model="ir.ui.view">
+        <field name="name">pre.sales.tree</field>
+        <field name="model">pre.sales</field>
+        <field name="arch" type="xml">
+            <tree string="Pre Sales">
+                <field name="SBUs"/>
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="name"/>
+         
+                <field name="client_user_name"/>
+                <!-- <field name="country"/> -->
+                <field name="profile_name"/>
+                <field name="service_type"/>
+                <field name="biding_amount"/>
+                <field name="amount_status"/>
+                <field name="client_category"/>
+                <field name="quote_category"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_pre_sales_form" model="ir.ui.view">
+        <field name="name">pre.sales.form</field>
+        <field name="model">pre.sales</field>
+        <field name="arch" type="xml">
+            <form string="Pre Sales">
+                <sheet>
+                    <group>
+                        <field name="SBUs"/>
+                        <field name="user_id"/>
+                        <field name="name"/>
+                        <field name="date"/>
+            
+                    </group>
+                    <group>
+                        <field name="client_user_name"/>
+                        <!-- <field name="country"/> -->
+                        <field name="profile_name"/>
+                        <field name="service_type"/>
+                        <field name="biding_amount"/>
+                        <field name="amount_status"/>
+                        <field name="client_category"/>
+                        <field name="quote_category"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_pre_sales_graph" model="ir.ui.view">
+        <field name="name">pre.sales.graph</field>
+        <field name="model">pre.sales</field>
+        <field name="arch" type="xml">
+            <graph string="Pre Sales by Task Type" type="bar">
+                <field name="biding_amount" type="measure"/>
+              
+                <field name="SBUs" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_pre_sales_pivot" model="ir.ui.view">
+        <field name="name">pre.sales.pivot</field>
+        <field name="model">pre.sales</field>
+        <field name="arch" type="xml">
+            <pivot string="Pre Sales Analysis">
+                <field name="biding_amount" type="measure"/>
+                <field name="SBUs" type="col"/>
+                <field name="client_category"/>
+                <field name="quote_category"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_pre_sales" model="ir.actions.act_window">
+        <field name="name">Pre Sales</field>
+        <field name="res_model">pre.sales</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_pre_sales_root" name="Pre Sales"/>
+    <menuitem id="menu_pre_sales" name="Pre Sales" parent="menu_pre_sales_root" action="action_pre_sales"/>
+</odoo>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Patient Tree View -->
+        <record id="view_hospital_patient_tree" model="ir.ui.view">
+            <field name="name">hospital.patient.tree</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="patient_id"/>
+                    <field name="name"/>
+                    <field name="age"/>
+                    <field name="gender"/>
+                    <field name="blood_group"/>
+                    <field name="phone"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Patient Form View -->
+        <record id="view_hospital_patient_form" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="active,inactive"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="patient_id" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="date_of_birth"/>
+                                <field name="age"/>
+                                <field name="gender"/>
+                                <field name="blood_group"/>
+                            </group>
+                            <group>
+                                <field name="phone"/>
+<!--                                <field name="email"/>-->
+                                <field name="emergency_contact"/>
+                                <field name="emergency_phone"/>
+                                <field name="insurance_number"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Personal Information">
+                                <group>
+                                    <field name="address" nolabel="1" placeholder="Address..."/>
+                                </group>
+                            </page>
+
+                            <page string="Medical Information">
+                                <group>
+                                    <field name="medical_history"/>
+
+                                    <field name="allergies"/>
+
+
+                                </group>
+                            </page>
+
+                            <page string="Appointments">
+                                <field name="appointment_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="doctor_id"/>
+                                        <field name="appointment_date"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Medical Records">
+                                <field name="medical_record_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="doctor_id"/>
+                                        <field name="visit_date"/>
+                                        <field name="diagnosis"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Bills">
+                                <field name="bill_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="bill_date"/>
+                                        <field name="total_amount"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Patient Search View -->
+        <record id="view_hospital_patient_search" model="ir.ui.view">
+            <field name="name">hospital.patient.search</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="patient_id"/>
+                    <field name="phone"/>
+<!--                    <field name="email"/>-->
+                    <filter string="Active" name="active" domain="[('state','=','active')]"/>
+                    <filter string="Inactive" name="inactive" domain="[('state','=','inactive')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Gender" name="gender" domain="[]" context="{'group_by':'gender'}"/>
+                        <filter string="Blood Group" name="blood_group" domain="[]" context="{'group_by':'blood_group'}"/>
+                        <filter string="Status" name="state" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Patient Action -->
+        <record id="action_hospital_patient" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.patient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first patient record!
+                </p>
+                <p>
+                    Here you can manage all patient information including personal details, medical history, and appointments.
+                </p>
+            </field>
+        </record>
+
+
+
+    </data>
+
+
+        <!-- Main Hospital Menu -->
+        <menuitem id="menu_hospital_root" name="Hospital" sequence="10"/>
+
+        <!-- Submenu for Patients -->
+        <menuitem id="menu_hospital_patient"
+                  name="Patients"
+                  parent="menu_hospital_root"
+                  action="action_hospital_patient"
+                  sequence="20"/>
+
+</odoo>

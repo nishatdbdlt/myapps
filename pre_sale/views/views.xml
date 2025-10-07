@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="pre_sale.list">
+      <field name="name">pre_sale list</field>
+      <field name="model">pre_sale.pre_sale</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="pre_sale.action_window">
+      <field name="name">pre_sale window</field>
+      <field name="res_model">pre_sale.pre_sale</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="pre_sale.action_server">
+      <field name="name">pre_sale server</field>
+      <field name="model_id" ref="model_pre_sale_pre_sale"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="pre_sale" id="pre_sale.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="pre_sale.menu_1" parent="pre_sale.menu_root"/>
+    <menuitem name="Menu 2" id="pre_sale.menu_2" parent="pre_sale.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="pre_sale.menu_1_list" parent="pre_sale.menu_1"
+              action="pre_sale.action_window"/>
+    <menuitem name="Server to list" id="pre_sale" parent="pre_sale.menu_2"
+              action="pre_sale.action_server"/>
+-->
+  </data>
+</odoo>
