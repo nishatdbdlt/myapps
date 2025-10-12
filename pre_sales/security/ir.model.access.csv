@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pre_sales_user,access.pre.sales.user,model_pre_sales,base.group_user,1,1,1,1
-access_pre_sales_manager,access.pre.sales.manager,model_pre_sales,base.group_system,1,1,1,1
-
-
-access_pre_sales_portal,access_pre_sales_portal,model_pre_sales,base.group_portal,1,1,1,0
-access_pre_sales_public,access_pre_sales_public,model_pre_sales,base.group_public,1,0,0,0

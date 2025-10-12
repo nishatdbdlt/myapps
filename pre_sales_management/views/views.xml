@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_crm_lead_tree_presales" model="ir.ui.view">
+        <field name="name">crm.lead.tree.presales</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Pre-Sales Opportunities">
+                <field name="name"/>
+<!--                <field name="client_user_name"/>-->
+<!--                <field name="employee_name"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_crm_lead_presales" model="ir.actions.act_window">
+        <field name="name">Pre-Sales Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_presales','=',True)]</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_presales_root" name="Pre-Sales" parent="crm.crm_menu_leads"/>
+    <menuitem id="menu_presales_leads" name="Leads" parent="menu_presales_root" action="action_crm_lead_presales"/>
+</odoo>

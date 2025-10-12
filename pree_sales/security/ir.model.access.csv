@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_pre_sales_user,res.partner.pre.sales.user,base.model_res_partner,base.group_user,1,1,1,0
+access_res_partner_pre_sales_manager,res.partner.pre.sales.manager,base.model_res_partner,base.group_system,1,1,1,1
