@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Book Sequence -->
+        <record id="seq_library_book" model="ir.sequence">
+            <field name="name">Library Book</field>
+            <field name="code">library.book</field>
+            <field name="prefix">BK</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Member Sequence -->
+        <record id="seq_library_member" model="ir.sequence">
+            <field name="name">Library Member</field>
+            <field name="code">library.member</field>
+            <field name="prefix">LM</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Borrow Sequence -->
+        <record id="seq_library_borrow" model="ir.sequence">
+            <field name="name">Library Borrow</field>
+            <field name="code">library.borrow</field>
+            <field name="prefix">BR</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Return Sequence -->
+        <record id="seq_library_return" model="ir.sequence">
+            <field name="name">Library Return</field>
+            <field name="code">library.return</field>
+            <field name="prefix">RT</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Fine Sequence -->
+        <record id="seq_library_fine" model="ir.sequence">
+            <field name="name">Library Fine</field>
+            <field name="code">library.fine</field>
+            <field name="prefix">FN</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

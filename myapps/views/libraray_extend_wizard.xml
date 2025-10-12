@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Due Date Wizard View -->
+    <record id="view_library_extend_wizard_form" model="ir.ui.view">
+        <field name="name">library.extend.wizard.form</field>
+        <field name="model">library.extend.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Extend Due Date">
+                <sheet>
+                    <div>
+                        <strong>Notice:</strong>
+                        <field name="extension_message" readonly="1"/>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="borrow_id" readonly="1"/>
+                            <field name="book_id" readonly="1"/>
+                            <field name="member_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="current_due_date" readonly="1"/>
+                            <field name="current_extensions" readonly="1"/>
+                            <field name="max_extensions_allowed" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Extension Details"/>
+                    <group>
+                        <group>
+                            <field name="extension_days" />
+                            <field name="new_due_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="extension_reason" />
+                            <field name="custom_reason"
+                                   />
+                        </group>
+                    </group>
+
+                    <field name="can_extend" invisible="1"/>
+                </sheet>
+
+                <footer>
+                    <button name="action_extend_due_date"
+                            type="object"
+                            string="Extend Due Date"
+                            class="btn-primary"
+                            />
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Extension History Tree View -->
+    <record id="view_library_extension_tree" model="ir.ui.view">
+        <field name="name">library.extension.tree</field>
+        <field name="model">library.extension</field>
+        <field name="arch" type="xml">
+            <tree string="Extension History">
+                <field name="name"/>
+                <field name="book_name"/>
+                <field name="member_name"/>
+                <field name="old_due_date"/>
+                <field name="new_due_date"/>
+                <field name="extension_days"/>
+                <field name="extension_reason"/>
+                <field name="extension_date"/>
+                <field name="extended_by"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Extension History Form View -->
+    <record id="view_library_extension_form" model="ir.ui.view">
+        <field name="name">library.extension.form</field>
+        <field name="model">library.extension</field>
+        <field name="arch" type="xml">
+            <form string="Extension Record" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="borrow_id"/>
+                            <field name="book_id"/>
+                            <field name="member_id"/>
+                        </group>
+                        <group>
+                            <field name="extension_date"/>
+                            <field name="extended_by"/>
+                            <field name="extension_days"/>
+                        </group>
+                    </group>
+
+                    <group string="Date Information">
+                        <group>
+                            <field name="old_due_date"/>
+                            <field name="new_due_date"/>
+                        </group>
+                    </group>
+
+                    <group string="Reason">
+                        <field name="extension_reason"/>
+                        <field name="custom_reason" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Extension History Search View -->
+    <record id="view_library_extension_search" model="ir.ui.view">
+        <field name="name">library.extension.search</field>
+        <field name="model">library.extension</field>
+        <field name="arch" type="xml">
+            <search string="Search Extensions">
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="extension_reason"/>
+                <field name="extended_by"/>
+
+                <filter string="Today" name="today"
+                        domain="[('extension_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="This Week" name="this_week"
+                        domain="[('extension_date', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month"
+                        domain="[('extension_date', '&gt;=', context_today().strftime('%Y-%m-01'))]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Member" name="group_member" context="{'group_by': 'member_id'}"/>
+                    <filter string="Book" name="group_book" context="{'group_by': 'book_id'}"/>
+                    <filter string="Reason" name="group_reason" context="{'group_by': 'extension_reason'}"/>
+                    <filter string="Extended By" name="group_extended_by" context="{'group_by': 'extended_by'}"/>
+                    <filter string="Extension Date" name="group_date" context="{'group_by': 'extension_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_library_extend_wizard" model="ir.actions.act_window">
+        <field name="name">Extend Due Date</field>
+        <field name="res_model">library.extend.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_library_extension" model="ir.actions.act_window">
+        <field name="name">Extension History</field>
+        <field name="res_model">library.extension</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No extensions found!
+            </p>
+            <p>
+                Extension history will appear here when members extend their due dates.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for Extension History -->
+
+    <menuitem id="menu_library_root"
+          name="Library"
+          sequence="10"/>
+   <menuitem id="menu_library_extension"
+          name="Extensions"
+          parent="menu_library_root"
+          action="action_library_extension"
+          sequence="30"/>
+
+
+</odoo>

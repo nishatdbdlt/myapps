@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="view_hospital_department_tree" model="ir.ui.view">
+            <field name="name">hospital.department.tree</field>
+            <field name="model">hospital.department</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="head_doctor_id"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hospital_department_form" model="ir.ui.view">
+            <field name="name">hospital.department.form</field>
+            <field name="model">hospital.department</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="head_doctor_id"/>
+                            <field name="active"/>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Doctors">
+                                <field name="doctor_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="specialization"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Rooms">
+                                <field name="room_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="room_type"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_hospital_department" model="ir.actions.act_window">
+            <field name="name">Departments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_hospital_department"
+                  name="Departments"
+                  parent="menu_hospital_root"
+                  action="action_hospital_department"/>
+    </data>
+</odoo>

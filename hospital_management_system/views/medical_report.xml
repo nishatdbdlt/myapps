@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_hospital_medical_record_tree" model="ir.ui.view">
+            <field name="name">hospital.medical.record.tree</field>
+            <field name="model">hospital.medical.record</field>
+            <field name="arch" type="xml">
+                <tree string="Medical Records">
+                    <field name="name"/>
+                    <field name="patient_id"/>
+                    <field name="doctor_id"/>
+                    <field name="appointment_id"/>
+                    <field name="visit_date"/>
+                    <field name="next_visit_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hospital_medical_record_form" model="ir.ui.view">
+            <field name="name">hospital.medical.record.form</field>
+            <field name="model">hospital.medical.record</field>
+            <field name="arch" type="xml">
+                <form string="Medical Record">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="appointment_id"/>
+                            <field name="visit_date"/>
+                            <field name="next_visit_date"/>
+                        </group>
+                        <notebook>
+                            <page string="Medical Details">
+                                <group>
+                                    <field name="symptoms"/>
+                                    <field name="diagnosis"/>
+                                    <field name="treatment"/>
+                                    <field name="prescription"/>
+                                </group>
+                            </page>
+                            <page string="Vital Signs">
+                                <group>
+                                    <field name="temperature"/>
+                                    <field name="blood_pressure_systolic"/>
+                                    <field name="blood_pressure_diastolic"/>
+                                    <field name="pulse_rate"/>
+                                    <field name="weight"/>
+                                    <field name="height"/>
+                                </group>
+                            </page>
+                            <page string="Notes">
+                                <group>
+                                    <field name="notes"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_hospital_medical_record" model="ir.actions.act_window">
+            <field name="name">Medical Records</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.medical.record</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_hospital_root" name="Hospital"/>
+        <menuitem id="menu_hospital_medical" name="Medical Records" parent="menu_hospital_root" action="action_hospital_medical_record"/>
+    </data>
+</odoo>

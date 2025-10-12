@@ -1,0 +1,33 @@
+<odoo>
+  <record id="view_student_id_card_wizard_form" model="ir.ui.view">
+    <field name="name">student.id.card.wizard.form</field>
+    <field name="model">student.id.card.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Student ID Card Wizard" create="false" edit="false" delete="false">
+        <group>
+          <field name="shift_id"/>
+          <field name="class_id" domain="[('shift_id', '=', shift_id)]"/>
+          <field name="section_id" domain="[('class_id', '=', class_id)]"/>
+          <field name="student_id" domain="[('shift_id', '=', shift_id), ('class_id', '=', class_id), ('section_id', '=', section_id)]"/>
+        </group>
+        <footer>
+          <button string="Print ID Card" type="object" name="action_print_id_card" class="btn-primary"/>
+          <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_student_id_card_wizard" model="ir.actions.act_window">
+    <field name="name">Student ID Card</field>
+    <field name="res_model">student.id.card.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+  <menuitem id="menu_student_id_card_root" name="ID Card"/>
+  <menuitem id="menu_student_id_card_wizard"
+            name="Print Student ID"
+            parent="menu_student_id_card_root"
+            action="action_student_id_card_wizard"/>
+</odoo>

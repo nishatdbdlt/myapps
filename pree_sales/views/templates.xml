@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- FORM VIEW: Inherit Partner Form View -->
+        <record id="view_res_partner_form_inherit_bidding" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.bidding</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Add a notebook page for Bidding Information -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Bidding Information" name="bidding_info">
+                        <group>
+                             <group string="Financial Details">
+<!--                                <field name="bidding_amount"/>-->
+<!--                               <field name="payment_status"/>-->
+<!--                                 <field name="quote_category"/>-->
+<!--                                 -->
+
+
+<!--                                &lt;!&ndash; <field name="sbus_id"/> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <field name="client_category"/> &ndash;&gt;-->
+<!--                                <field name='client_user_id'/>-->
+<!--                                <field name="profile" />-->
+<!--                                <field  name='User_id'/>-->
+<!--                                <field name='Name' />-->
+<!--                                &lt;!&ndash; <field name='profile_id' /> &ndash;&gt;-->
+
+<!--                                  &lt;!&ndash; <field name='client_user_id'/> &ndash;&gt;-->
+
+
+<!--                                <field name="date"/>-->
+<!--                                <field name="service_type"/>-->
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- TREE VIEW: List View for Pre-Sales -->
+        <record id="view_res_partner_tree_pre_sales" model="ir.ui.view">
+            <field name="name">res.partner.tree.pre.sales</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Pre Sales">
+                     <!-- <field name="sbus_id" string="company name"/> -->
+<!--                    <field name="date"/>-->
+<!--                    <field name="User_id"/>-->
+<!--                    &lt;!&ndash; <field name="name" string="Client Name"/> &ndash;&gt;-->
+<!--                    <field name ="Name"/>-->
+<!--                   <field name="client_user_id"/>-->
+<!--                   <field  name='profile'/>-->
+<!--                    <field name="service_type"/>-->
+
+                      <field name="bidding_amount"/>
+                    <!-- <field name="client_category"/> -->
+<!--                    <field name ="quote_category"/>-->
+
+<!--                    &lt;!&ndash; <field name="quote_category" optional="hide"/> &ndash;&gt;-->
+
+<!--                    &lt;!&ndash; <field name="bidding_amount"/> &ndash;&gt;-->
+
+
+<!--                    <field name="payment_status" widget="badge"-->
+<!--                           decoration-success="payment_status=='sold'"-->
+<!--                           decoration-warning="payment_status=='unsold'"-->
+<!--                           decoration-danger="payment_status=='overdue'"/>-->
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- GRAPH VIEW: Analytics for Pre-Sales -->
+        <record id="view_res_partner_graph_pre_sales" model="ir.ui.view">
+            <field name="name">res.partner.graph.pre.sales</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <graph string="Pre Sales Analysis" type="bar">
+<!--                    <field name="service_type"/>-->
+                    <field name="bidding_amount"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- PIVOT VIEW: Pivot Table for Pre-Sales (Optional but useful) -->
+        <record id="view_res_partner_pivot_pre_sales" model="ir.ui.view">
+            <field name="name">res.partner.pivot.pre.sales</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <pivot string="Pre Sales Pivot" sample="1">
+<!--                    <field name="service_type"/>-->
+                    <!-- <field name="bidding_status" type="col"/> -->
+                    <!-- <field name="client_category" type="row"/> -->
+                    <field name="bidding_amount"/>
+                </pivot>
+            </field>
+        </record>
+
+
+
+        <!-- SEARCH VIEW: Enhanced Search and Filters -->
+        <record id="view_res_partner_search_pre_sales" model="ir.ui.view">
+            <field name="name">res.partner.search.pre.sales</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Pre Sales Search">
+                    <!-- Search Fields -->
+                    <field name="name"/>
+<!--                    <field name="service_type"/>-->
+                    <!-- <field name="client_category"/> -->
+
+
+                    <!-- Filters -->
+                    <filter string="High Value (>100k)" name="high_value"
+                            domain="[('bidding_amount','>',100000)]"/>
+                    <filter string="Low Value (≤100k)" name="low_value"
+                            domain="[('bidding_amount','&lt;=',100000)]"/>
+
+                    <separator/>
+                    <!-- <filter string="Won" name="won"
+                            domain="[('bidding_status','=','won')]"/>
+                    <filter string="In Progress" name="in_progress"
+                            domain="[('bidding_status','=','in_progress')]"/>
+                    <filter string="Lost" name="lost"
+                            domain="[('bidding_status','=','lost')]"/> -->
+
+                    <separator/>
+<!--                    <filter string="Paid" name="paid" -->
+<!--                            domain="[('payment_status','=','paid')]"/>-->
+<!--                    <filter string="Pending" name="pending" -->
+<!--                            domain="[('payment_status','=','pending')]"/>-->
+<!--                    -->
+                    <!-- Group By -->
+                    <!-- <group expand="0" string="Group By">
+                        <filter string="Service Type" name="group_service_type"
+                                context="{'group_by':'service_type'}"/>
+                        <filter string="Bidding Status" name="group_bidding_status"
+                                context="{'group_by':'bidding_status'}"/>
+                        <filter string="Client Category" name="group_client_category"
+                                context="{'group_by':'client_category'}"/>
+                        <filter string="Payment Status" name="group_payment_status"
+                                context="{'group_by':'payment_status'}"/>
+                        <filter string="Date" name="group_date"
+                                context="{'group_by':'date'}"/>
+                    </group> -->
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION: Configure all views -->
+        <record id="action_res_partner_pre_sales" model="ir.actions.act_window">
+            <field name="name">Pre Sales</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="search_view_id" ref="view_res_partner_search_pre_sales"/>
+            <field name="context">{
+                'search_default_group_service_type': 1
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Pre Sales record
+                </p>
+                <p>
+                    Track bidding information, client details, and service types for your pre-sales process.
+                </p>
+            </field>
+        </record>
+
+
+
+        <record id="action_res_partner_pre_sales_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_res_partner_tree_pre_sales"/>
+            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
+        </record>
+
+        <record id="action_res_partner_pre_sales_view_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_res_partner_form_inherit_bidding"/>
+            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
+        </record>
+
+        <record id="action_res_partner_pre_sales_view_graph" model="ir.actions.act_window.view">
+            <field name="sequence" eval="4"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_res_partner_graph_pre_sales"/>
+            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
+        </record>
+
+        <record id="action_res_partner_pre_sales_view_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="view_res_partner_pivot_pre_sales"/>
+            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- MENU STRUCTURE -->
+        <!-- ============================================ -->
+
+        <!-- Option 1: Main Menu (Top Level) -->
+        <!-- <menuitem id="menu_sales_pree_sales_root"
+                  name="Pre Sales"
+                  parent="crm.crm_menu_sales" -->
+
+
+        <!-- Dashboard/All Pre Sales -->
+       <menuitem id="menu_pre_sales_main"
+                  name="Pre Sales"
+                  parent="crm.crm_menu_sales"
+                  sequence="-1"
+                  action="action_res_partner_pre_sales"/>
+        <!-- Sub-menu for filtering by status -->
+        <!-- <menuitem id="menu_pre_sales_by_status"
+                  name="By Status"
+                  parent="menu_pre_sales_all"
+                /> -->
+
+        <!-- <record id="action_pre_sales_won" model="ir.actions.act_window">
+            <field name="name">Won Deals</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="domain">[('bidding_status','=','won')]</field>
+            <field name="context">{'search_default_group_service_type': 1}</field>
+        </record> -->
+
+        <!-- <record id="action_pre_sales_in_progress" model="ir.actions.act_window">
+            <field name="name">In Progress</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="domain">[('bidding_status','=','in_progress')]</field>
+            <field name="context">{'search_default_group_service_type': 1}</field>
+        </record> -->
+
+        <!-- <record id="action_pre_sales_lost" model="ir.actions.act_window">
+            <field name="name">Lost Deals</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="domain">[('bidding_status','=','lost')]</field>
+            <field name="context">{'search_default_group_service_type': 1}</field>
+        </record> -->
+
+        <!-- <menuitem id="menu_pre_sales_won"
+                  name="Won"
+                  parent="menu_pre_sales_by_status"
+                  sequence="1"
+                  action="action_pre_sales_won"/>
+
+        <menuitem id="menu_pre_sales_in_progress"
+                  name="In Progress"
+                  parent="menu_pre_sales_by_status"
+                  sequence="2"
+                  action="action_pre_sales_in_progress"/>
+
+        <menuitem id="menu_pre_sales_lost"
+                  name="Lost"
+                  parent="menu_pre_sales_by_status"
+                  sequence="3"
+                  action="action_pre_sales_lost"/>
+
+        <menuitem id="menu_pre_sales_reports"
+                  name="Reports"
+                  parent="menu_pre_sales_main"
+                  sequence="20"/> -->
+
+        <!-- <record id="action_pre_sales_analysis" model="ir.actions.act_window">
+            <field name="name">Pre Sales Analysis</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">graph,pivot</field>
+            <field name="context">{'search_default_group_service_type': 1}</field>
+        </record> -->
+
+        <!-- <menuitem id="menu_pre_sales_analysis"
+                  name="Analysis"
+                  parent="menu_pre_sales_reports"
+                  sequence="1"
+                  action="action_pre_sales_analysis"/> -->
+
+
+    </data>
+</odoo>

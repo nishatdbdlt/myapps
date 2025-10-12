@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_library_category_tree" model="ir.ui.view">
+        <field name="name">library.category.tree</field>
+        <field name="model">library.category</field>
+        <field name="arch" type="xml">
+            <tree string="Library Categories">
+                <field name="name"/>
+                <field name="complete_name"/>
+                <field name="parent_id"/>
+                <field name="book_count"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_category_form" model="ir.ui.view">
+        <field name="name">library.category.form</field>
+        <field name="model">library.category</field>
+        <field name="arch" type="xml">
+            <form string="Library Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="complete_name" readonly="1"/>
+                        <field name="parent_id"/>
+                        <field name="description"/>
+                        <field name="active"/>
+                        <field name="color"/>
+                    </group>
+                    <notebook>
+                        <page string="Child Categories">
+                            <field name="child_id">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="complete_name"/>
+                                    <field name="book_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_category" model="ir.actions.act_window">
+        <field name="name">Library Categories</field>
+        <field name="res_model">library.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+  <!-- Menu -->
+<menuitem id="menu_library_root" name="Library"/>
+<menuitem id="menu_library_category" name="Categories" parent="menu_library_root" action="action_library_category"/>
+
+</odoo>

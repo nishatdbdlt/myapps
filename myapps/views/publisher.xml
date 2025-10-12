@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Publisher Tree View -->
+        <record id="view_library_publisher_tree" model="ir.ui.view">
+            <field name="name">library.publisher.tree</field>
+            <field name="model">library.publisher</field>
+            <field name="arch" type="xml">
+                <tree string="Publishers">
+                    <field name="name"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="founded_year"/>
+                    <field name="book_count" widget="integer"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Publisher Form View -->
+        <record id="view_library_publisher_form" model="ir.ui.view">
+            <field name="name">library.publisher.form</field>
+            <field name="model">library.publisher</field>
+            <field name="arch" type="xml">
+                <form string="Publisher">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="logo" widget="image"/>
+                                <field name="description"/>
+                                <field name="founded_year"/>
+                                <field name="active"/>
+                            </group>
+
+                            <group>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="website"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="zip_code"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Published Books">
+                                <field name="book_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="author_ids"/>
+                                        <field name="publication_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Publisher Search View -->
+        <record id="view_library_publisher_search" model="ir.ui.view">
+            <field name="name">library.publisher.search</field>
+            <field name="model">library.publisher</field>
+            <field name="arch" type="xml">
+                <search string="Search Publishers">
+                    <field name="name"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="founded_year"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Publisher Action -->
+        <record id="action_library_publisher" model="ir.actions.act_window">
+            <field name="name">Publishers</field>
+            <field name="res_model">library.publisher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new Publisher
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_library_root" name="Library"/>
+        <menuitem id="menu_library_publisher" name="Publishers"
+                  parent="menu_library_root"
+                  action="action_library_publisher"/>
+
+    </data>
+</odoo>

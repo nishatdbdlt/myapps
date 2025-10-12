@@ -1,0 +1,98 @@
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+
+
+class LibraryCategory(models.Model):
+    _name = "library.category"
+    _description = "Library Book Category"
+    _order = "name"
+    _parent_store = True
+    _parent_name = "parent_id"
+    _rec_name = "complete_name"
+
+    # Fields
+    name = fields.Char(
+        'Category Name',
+        required=True,
+        default=lambda self: _('Uncategorized')  # Auto default if empty
+    )
+    complete_name = fields.Char(
+        'Complete Name',
+        compute='_compute_complete_name',
+        store=True
+    )
+    parent_id = fields.Many2one(
+        'library.category',
+        string='Parent Category',
+        index=True,
+        ondelete='set null'  # safer than cascade
+    )
+    parent_path = fields.Char(index=True)
+
+    description = fields.Text('Description')
+    active = fields.Boolean('Active', default=True)
+    color = fields.Integer('Color Index')
+
+    book_count = fields.Integer(
+        'Number of Books',
+        compute='_compute_book_count'
+    )
+
+    child_id = fields.One2many(
+        'library.category',
+        'parent_id',
+        string='Child Categories'
+    )
+
+    # Compute complete name
+    @api.depends('name', 'parent_id.complete_name')
+    def _compute_complete_name(self):
+        for category in self:
+            if category.parent_id:
+                category.complete_name = f"{category.parent_id.complete_name} / {category.name}"
+            else:
+                category.complete_name = category.name
+
+    # Compute book count
+    @api.depends('child_id')
+    def _compute_book_count(self):
+        for category in self:
+            category.book_count = self.env['library.book'].search_count([
+                ('category_id', 'child_of', category.id)
+            ])
+
+    # Prevent recursive categories
+    @api.constrains('parent_id')
+    def _check_category_recursion(self):
+        if not self._check_recursion():
+            raise ValidationError(_('You cannot create recursive categories.'))
+
+    # Display name
+    def name_get(self):
+        result = []
+        for category in self:
+            name = category.complete_name or category.name
+            result.append((category.id, name))
+        return result
+
+    # Search by name or complete name
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+        if name:
+            domain = ['|', ('name', operator, name), ('complete_name', operator, name)]
+            categories = self.search(domain + args, limit=limit)
+            return categories.name_get()
+        return self.search(args, limit=limit).name_get()
+
+    # Smart button: view related books
+    def action_view_book(self):
+        self.ensure_one()
+        return {
+            'name': _('Books in category: %s') % self.name,
+            'type': 'ir.actions.act_window',
+            'res_model': 'library.book',
+            'view_mode': 'tree,form',
+            'domain': [('category_id', 'child_of', self.id)],
+            'context': {'default_category_id': self.id},
+        }

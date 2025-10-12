@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Medicine Tree View -->
+        <record id="view_hospital_medicine_tree" model="ir.ui.view">
+            <field name="name">hospital.medicine.tree</field>
+            <field name="model">hospital.medicine</field>
+            <field name="arch" type="xml">
+                <tree decoration-warning="stock_quantity &lt;= reorder_level">
+                    <field name="name"/>
+                    <field name="generic_name"/>
+                    <field name="medicine_type"/>
+                    <field name="manufacturer"/>
+                    <field name="strength"/>
+                    <field name="unit_price"/>
+                    <field name="stock_quantity"/>
+                    <field name="reorder_level"/>
+                    <field name="expiry_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Medicine Form View -->
+        <record id="view_hospital_medicine_form" model="ir.ui.view">
+            <field name="name">hospital.medicine.form</field>
+            <field name="model">hospital.medicine</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="generic_name"/>
+                                <field name="medicine_type"/>
+                                <field name="manufacturer"/>
+                                <field name="strength"/>
+                            </group>
+                            <group>
+                                <field name="unit_price"/>
+                                <field name="stock_quantity"/>
+                                <field name="reorder_level"/>
+                                <field name="expiry_date"/>
+                                <field name="batch_number"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1" placeholder="Medicine description..."/>
+                            </page>
+
+                            <page string="Side Effects">
+                                <field name="side_effects" nolabel="1" placeholder="Side effects..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Medicine Action -->
+        <record id="action_hospital_medicine" model="ir.actions.act_window">
+            <field name="name">Medicines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.medicine</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <menuitem id="menu_hospital_root" name="Hospital"/>
+        <menuitem id="menu_hospital_medicine" name="Medicine" parent="menu_hospital_root" action="action_hospital_medicine"/>
+    </data>
+</odoo>
