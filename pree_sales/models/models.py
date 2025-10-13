@@ -1,37 +1,40 @@
 from odoo import models, fields, api
 
-
-class ResPartner(models.Model):
+class CrmLead(models.Model):
     _inherit = 'res.partner'
 
-    client_user_id = fields.Many2one(
-        'res.users',
-        string='Client User',
-        help='The user who created this bidding record',
-        index=True
-    )
+    bidding_amount = fields.Char(string='Bidding Amount')
 
-    bidding_amount = fields.Float(
-        string='Bidding Amount',
-        digits='Product Price',
-        help='Amount for this bidding'
-    )
+    client_user = fields.Char(string='Client User Name')
+    user_code = fields.Char(string='User ID')
+    client_name = fields.Char(string='Client Display Name')
 
+    Sbus_id = fields.Char(string='Company Name')
+    date = fields.Date(string='Date')
+
+    Service_type = fields.Char(string='Service Type')
     bidding_status = fields.Selection([
         ('draft', 'Draft'),
         ('submitted', 'Submitted'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-    ], string='Bidding Status', default='draft', required=True)
+        ('won', 'Won'),
+        ('lost', 'Lost')
+    ], string='Bidding Status', default='draft')
 
-    # Optional: Add a computed field to check if current user owns this bidding
-    @api.depends('client_user_id')
-    def _compute_is_my_bidding(self):
-        for record in self:
-            record.is_my_bidding = record.client_user_id == self.env.user
+    payment_status = fields.Selection([
+        ('sold', 'Sold'),
+        ('unsold', 'Unsold'),
+    ], string='Payment Status')
 
-    is_my_bidding = fields.Boolean(
-        string='My Bidding',
-        compute='_compute_is_my_bidding',
-        store=False
-    )
+    client_category = fields.Selection([
+        ('new', 'New'),
+        ('existing', 'Existing'),
+        ('vip', 'VIP')
+    ], string='Client Category')
+
+    quote_category = fields.Selection([
+        ('fixed', 'Fixed Price'),
+        ('hourly', 'Hourly'),
+        ('milestone', 'Milestone Based')
+    ], string='Quote Category')
+
+    profile = fields.Char(string='Profile Name')

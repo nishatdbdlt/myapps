@@ -1,286 +1,426 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <!-- Add Bidding menu to portal -->
+    <template id="portal_my_home_menu_bidding" name="Portal My Home : Bidding" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Bidding Records</t>
+                <t t-set="url" t-value="'/my/bidding'"/>
+                <t t-set="placeholder_count" t-value="'bidding_count'"/>
+            </t>
+        </xpath>
+    </template>
 
-        <!-- FORM VIEW: Inherit Partner Form View -->
-        <record id="view_res_partner_form_inherit_bidding" model="ir.ui.view">
-            <field name="name">res.partner.form.inherit.bidding</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                <!-- Add a notebook page for Bidding Information -->
-                <xpath expr="//notebook" position="inside">
-                    <page string="Bidding Information" name="bidding_info">
-                        <group>
-                             <group string="Financial Details">
-<!--                                <field name="bidding_amount"/>-->
-<!--                               <field name="payment_status"/>-->
-<!--                                 <field name="quote_category"/>-->
-<!--                                 -->
+    <!-- Bidding List Page -->
+    <template id="portal_my_bidding" name="My Bidding Records">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Bidding Records</t>
+            </t>
 
-<!--                                &lt;!&ndash; <field name="sbus_id"/> &ndash;&gt;-->
-<!--                                &lt;!&ndash; <field name="client_category"/> &ndash;&gt;-->
-<!--                                <field name='client_user_id'/>-->
-<!--                                <field name="profile" />-->
-<!--                                <field  name='User_id'/>-->
-<!--                                <field name='Name' />-->
-<!--                                &lt;!&ndash; <field name='profile_id' /> &ndash;&gt;-->
+            <div class="container mt-3">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <a href="/my/bidding/create" class="btn btn-primary">
+                            <i class="fa fa-plus"/> Create New Bidding
+                        </a>
+                    </div>
+                </div>
 
-<!--                                  &lt;!&ndash; <field name='client_user_id'/> &ndash;&gt;-->
+                <t t-if="request.params.get('message') == 'success'">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Bidding record created successfully!
+                        <button type="button" class="close" data-dismiss="alert">times;</button>
+                    </div>
+                </t>
 
+                <t t-if="request.params.get('message') == 'deleted'">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Bidding record deleted successfully!
+                        <button type="button" class="close" data-dismiss="alert">times;</button>
+                    </div>
+                </t>
 
-<!--                                <field name="date"/>-->
-<!--                                <field name="service_type"/>-->
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Company</th>
+                                    <th>Bidding Amount</th>
+                                    <th>Service Type</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="not bidding_records">
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">No bidding records found</td>
+                                    </tr>
+                                </t>
+                                <t t-foreach="bidding_records" t-as="bidding">
+                                    <tr>
+                                        <td><t t-esc="bidding.client_name"/></td>
+                                        <td><t t-esc="bidding.Sbus_id"/></td>
+                                        <td><t t-esc="bidding.bidding_amount"/></td>
+                                        <td><t t-esc="bidding.Service_type"/></td>
+                                        <td>
+                                            <span t-if="bidding.bidding_status == 'draft'" class="badge badge-secondary">Draft</span>
+                                            <span t-if="bidding.bidding_status == 'submitted'" class="badge badge-info">Submitted</span>
+                                            <span t-if="bidding.bidding_status == 'won'" class="badge badge-success">Won</span>
+                                            <span t-if="bidding.bidding_status == 'lost'" class="badge badge-danger">Lost</span>
+                                        </td>
+                                        <td><t t-esc="bidding.date"/></td>
+                                        <td>
+                                            <a t-attf-href="/my/bidding/{{bidding.id}}" class="btn btn-sm btn-info">
+                                                <i class="fa fa-eye"/> View
+                                            </a>
+                                            <a t-attf-href="/my/bidding/edit/{{bidding.id}}" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-edit"/> Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
 
-                            </group>
-                        </group>
-                    </page>
-                </xpath>
-            </field>
-        </record>
+    <!-- Bidding Create Form -->
+    <template id="portal_bidding_create_form" name="Create Bidding">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h2 class="mb-4">Create New Bidding</h2>
 
-        <!-- TREE VIEW: List View for Pre-Sales -->
-        <record id="view_res_partner_tree_pre_sales" model="ir.ui.view">
-            <field name="name">res.partner.tree.pre.sales</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <tree string="Pre Sales">
-                     <!-- <field name="sbus_id" string="company name"/> -->
-<!--                    <field name="date"/>-->
-<!--                    <field name="User_id"/>-->
-<!--                    &lt;!&ndash; <field name="name" string="Client Name"/> &ndash;&gt;-->
-<!--                    <field name ="Name"/>-->
-<!--                   <field name="client_user_id"/>-->
-<!--                   <field  name='profile'/>-->
-<!--                    <field name="service_type"/>-->
+                        <t t-if="request.params.get('error')">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Error: <t t-esc="request.params.get('error')"/>
+                                <button type="button" class="close" data-dismiss="alert">times;</button>
+                            </div>
+                        </t>
 
-                      <field name="bidding_amount"/>
-                    <!-- <field name="client_category"/> -->
-<!--                    <field name ="quote_category"/>-->
+                        <form action="/my/bidding/submit" method="POST" class="card p-4">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-<!--                    &lt;!&ndash; <field name="quote_category" optional="hide"/> &ndash;&gt;-->
+                            <div class="form-group">
+                                <label for="client_user">Client User Name</label>
+                                <input type="text" class="form-control" id="client_user" name="client_user" required="required"/>
+                            </div>
 
-<!--                    &lt;!&ndash; <field name="bidding_amount"/> &ndash;&gt;-->
+                            <div class="form-group">
+                                <label for="user_code">User ID</label>
+                                <input type="text" class="form-control" id="user_code" name="user_code" required="required"/>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="client_name">Client Display Name</label>
+                                <input type="text" class="form-control" id="client_name" name="client_name" required="required"/>
+                            </div>
 
-<!--                    <field name="payment_status" widget="badge"-->
-<!--                           decoration-success="payment_status=='sold'"-->
-<!--                           decoration-warning="payment_status=='unsold'"-->
-<!--                           decoration-danger="payment_status=='overdue'"/>-->
+                            <div class="form-group">
+                                <label for="Sbus_id">Company Name</label>
+                                <input type="text" class="form-control" id="Sbus_id" name="Sbus_id"/>
+                            </div>
 
-                </tree>
-            </field>
-        </record>
+                            <div class="form-group">
+                                <label for="bidding_amount">Bidding Amount</label>
+                                <input type="text" class="form-control" id="bidding_amount" name="bidding_amount"/>
+                            </div>
 
-        <!-- GRAPH VIEW: Analytics for Pre-Sales -->
-        <record id="view_res_partner_graph_pre_sales" model="ir.ui.view">
-            <field name="name">res.partner.graph.pre.sales</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <graph string="Pre Sales Analysis" type="bar">
-<!--                    <field name="service_type"/>-->
-                    <field name="bidding_amount"/>
-                </graph>
-            </field>
-        </record>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date" name="date"/>
+                            </div>
 
-        <!-- PIVOT VIEW: Pivot Table for Pre-Sales (Optional but useful) -->
-        <record id="view_res_partner_pivot_pre_sales" model="ir.ui.view">
-            <field name="name">res.partner.pivot.pre.sales</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <pivot string="Pre Sales Pivot" sample="1">
-<!--                    <field name="service_type"/>-->
-                    <!-- <field name="bidding_status" type="col"/> -->
-                    <!-- <field name="client_category" type="row"/> -->
-                    <field name="bidding_amount"/>
-                </pivot>
-            </field>
-        </record>
+                            <div class="form-group">
+                                <label for="Service_type">Service Type</label>
+                                <input type="text" class="form-control" id="Service_type" name="Service_type"/>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="bidding_status">Bidding Status</label>
+                                <select class="form-control" id="bidding_status" name="bidding_status">
+                                    <option value="draft">Draft</option>
+                                    <option value="submitted">Submitted</option>
+                                    <option value="won">Won</option>
+                                    <option value="lost">Lost</option>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="payment_status">Payment Status</label>
+                                <select class="form-control" id="payment_status" name="payment_status">
+                                    <option value="">-- Select --</option>
+                                    <option value="sold">Sold</option>
+                                    <option value="unsold">Unsold</option>
+                                </select>
+                            </div>
 
-        <!-- SEARCH VIEW: Enhanced Search and Filters -->
-        <record id="view_res_partner_search_pre_sales" model="ir.ui.view">
-            <field name="name">res.partner.search.pre.sales</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <search string="Pre Sales Search">
-                    <!-- Search Fields -->
-                    <field name="name"/>
-<!--                    <field name="service_type"/>-->
-                    <!-- <field name="client_category"/> -->
+                            <div class="form-group">
+                                <label for="client_category">Client Category</label>
+                                <select class="form-control" id="client_category" name="client_category">
+                                    <option value="">-- Select --</option>
+                                    <option value="new">New</option>
+                                    <option value="existing">Existing</option>
+                                    <option value="vip">VIP</option>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="quote_category">Quote Category</label>
+                                <select class="form-control" id="quote_category" name="quote_category">
+                                    <option value="">-- Select --</option>
+                                    <option value="fixed">Fixed Price</option>
+                                    <option value="hourly">Hourly</option>
+                                    <option value="milestone">Milestone Based</option>
+                                </select>
+                            </div>
 
-                    <!-- Filters -->
-                    <filter string="High Value (>100k)" name="high_value"
-                            domain="[('bidding_amount','>',100000)]"/>
-                    <filter string="Low Value (≤100k)" name="low_value"
-                            domain="[('bidding_amount','&lt;=',100000)]"/>
+                            <div class="form-group">
+                                <label for="profile">Profile Name</label>
+                                <input type="text" class="form-control" id="profile" name="profile"/>
+                            </div>
 
-                    <separator/>
-                    <!-- <filter string="Won" name="won"
-                            domain="[('bidding_status','=','won')]"/>
-                    <filter string="In Progress" name="in_progress"
-                            domain="[('bidding_status','=','in_progress')]"/>
-                    <filter string="Lost" name="lost"
-                            domain="[('bidding_status','=','lost')]"/> -->
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check"/> Submit
+                                </button>
+                                <a href="/my/bidding" class="btn btn-secondary">
+                                    <i class="fa fa-times"/> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
 
-                    <separator/>
-<!--                    <filter string="Paid" name="paid" -->
-<!--                            domain="[('payment_status','=','paid')]"/>-->
-<!--                    <filter string="Pending" name="pending" -->
-<!--                            domain="[('payment_status','=','pending')]"/>-->
-<!--                    -->
-                    <!-- Group By -->
-                    <!-- <group expand="0" string="Group By">
-                        <filter string="Service Type" name="group_service_type"
-                                context="{'group_by':'service_type'}"/>
-                        <filter string="Bidding Status" name="group_bidding_status"
-                                context="{'group_by':'bidding_status'}"/>
-                        <filter string="Client Category" name="group_client_category"
-                                context="{'group_by':'client_category'}"/>
-                        <filter string="Payment Status" name="group_payment_status"
-                                context="{'group_by':'payment_status'}"/>
-                        <filter string="Date" name="group_date"
-                                context="{'group_by':'date'}"/>
-                    </group> -->
-                </search>
-            </field>
-        </record>
+    <!-- Bidding Detail Page -->
+    <template id="portal_bidding_detail" name="Bidding Detail">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2>Bidding Details</h2>
+                            <div>
+                                <a t-attf-href="/my/bidding/edit/{{bidding.id}}" class="btn btn-warning">
+                                    <i class="fa fa-edit"/> Edit
+                                </a>
+                                <a href="/my/bidding" class="btn btn-secondary">
+                                    <i class="fa fa-arrow-left"/> Back to List
+                                </a>
+                            </div>
+                        </div>
 
-        <!-- ACTION: Configure all views -->
-        <record id="action_res_partner_pre_sales" model="ir.actions.act_window">
-            <field name="name">Pre Sales</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">tree,form,graph,pivot</field>
-            <field name="search_view_id" ref="view_res_partner_search_pre_sales"/>
-            <field name="context">{
-                'search_default_group_service_type': 1
-            }</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create your first Pre Sales record
-                </p>
-                <p>
-                    Track bidding information, client details, and service types for your pre-sales process.
-                </p>
-            </field>
-        </record>
+                        <t t-if="request.params.get('message') == 'updated'">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Bidding record updated successfully!
+                                <button type="button" class="close" data-dismiss="alert">times;</button>
+                            </div>
+                        </t>
 
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Client User Name:</strong>
+                                        <p><t t-esc="bidding.client_user"/></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>User ID:</strong>
+                                        <p><t t-esc="bidding.user_code"/></p>
+                                    </div>
+                                </div>
 
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Client Display Name:</strong>
+                                        <p><t t-esc="bidding.client_name"/></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Company Name:</strong>
+                                        <p><t t-esc="bidding.Sbus_id"/></p>
+                                    </div>
+                                </div>
 
-        <record id="action_res_partner_pre_sales_view_tree" model="ir.actions.act_window.view">
-            <field name="sequence" eval="2"/>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_res_partner_tree_pre_sales"/>
-            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
-        </record>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Bidding Amount:</strong>
+                                        <p><t t-esc="bidding.bidding_amount"/></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Date:</strong>
+                                        <p><t t-esc="bidding.date"/></p>
+                                    </div>
+                                </div>
 
-        <record id="action_res_partner_pre_sales_view_form" model="ir.actions.act_window.view">
-            <field name="sequence" eval="3"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_res_partner_form_inherit_bidding"/>
-            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
-        </record>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Service Type:</strong>
+                                        <p><t t-esc="bidding.Service_type"/></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Profile Name:</strong>
+                                        <p><t t-esc="bidding.profile"/></p>
+                                    </div>
+                                </div>
 
-        <record id="action_res_partner_pre_sales_view_graph" model="ir.actions.act_window.view">
-            <field name="sequence" eval="4"/>
-            <field name="view_mode">graph</field>
-            <field name="view_id" ref="view_res_partner_graph_pre_sales"/>
-            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
-        </record>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <strong>Bidding Status:</strong>
+                                        <p>
+                                            <span t-if="bidding.bidding_status == 'draft'" class="badge badge-secondary">Draft</span>
+                                            <span t-if="bidding.bidding_status == 'submitted'" class="badge badge-info">Submitted</span>
+                                            <span t-if="bidding.bidding_status == 'won'" class="badge badge-success">Won</span>
+                                            <span t-if="bidding.bidding_status == 'lost'" class="badge badge-danger">Lost</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Payment Status:</strong>
+                                        <p><t t-esc="dict(bidding._fields['payment_status'].selection).get(bidding.payment_status, '')"/></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Client Category:</strong>
+                                        <p><t t-esc="dict(bidding._fields['client_category'].selection).get(bidding.client_category, '')"/></p>
+                                    </div>
+                                </div>
 
-        <record id="action_res_partner_pre_sales_view_pivot" model="ir.actions.act_window.view">
-            <field name="sequence" eval="5"/>
-            <field name="view_mode">pivot</field>
-            <field name="view_id" ref="view_res_partner_pivot_pre_sales"/>
-            <field name="act_window_id" ref="action_res_partner_pre_sales"/>
-        </record>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Quote Category:</strong>
+                                        <p><t t-esc="dict(bidding._fields['quote_category'].selection).get(bidding.quote_category, '')"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
 
-        <!-- ============================================ -->
-        <!-- MENU STRUCTURE -->
-        <!-- ============================================ -->
+    <!-- Bidding Edit Form -->
+    <template id="portal_bidding_edit_form" name="Edit Bidding">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h2 class="mb-4">Edit Bidding</h2>
 
-        <!-- Option 1: Main Menu (Top Level) -->
-        <!-- <menuitem id="menu_sales_pree_sales_root"
-                  name="Pre Sales"
-                  parent="crm.crm_menu_sales" -->
+                        <t t-if="request.params.get('error')">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Error: <t t-esc="request.params.get('error')"/>
+                                <button type="button" class="close" data-dismiss="alert">times;</button>
+                            </div>
+                        </t>
 
+                        <form t-attf-action="/my/bidding/update/{{bidding.id}}" method="POST" class="card p-4">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-        <!-- Dashboard/All Pre Sales -->
-       <menuitem id="menu_pre_sales_main"
-                  name="Pre Sales"
-                  parent="crm.crm_menu_sales"
-                  sequence="-1"
-                  action="action_res_partner_pre_sales"/>
-        <!-- Sub-menu for filtering by status -->
-        <!-- <menuitem id="menu_pre_sales_by_status"
-                  name="By Status"
-                  parent="menu_pre_sales_all"
-                /> -->
+                            <div class="form-group">
+                                <label for="client_user">Client User Name</label>
+                                <input type="text" class="form-control" id="client_user" name="client_user" t-att-value="bidding.client_user" required="required"/>
+                            </div>
 
-        <!-- <record id="action_pre_sales_won" model="ir.actions.act_window">
-            <field name="name">Won Deals</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">tree,form,graph,pivot</field>
-            <field name="domain">[('bidding_status','=','won')]</field>
-            <field name="context">{'search_default_group_service_type': 1}</field>
-        </record> -->
+                            <div class="form-group">
+                                <label for="user_code">User ID</label>
+                                <input type="text" class="form-control" id="user_code" name="user_code" t-att-value="bidding.user_code" required="required"/>
+                            </div>
 
-        <!-- <record id="action_pre_sales_in_progress" model="ir.actions.act_window">
-            <field name="name">In Progress</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">tree,form,graph,pivot</field>
-            <field name="domain">[('bidding_status','=','in_progress')]</field>
-            <field name="context">{'search_default_group_service_type': 1}</field>
-        </record> -->
+                            <div class="form-group">
+                                <label for="client_name">Client Display Name</label>
+                                <input type="text" class="form-control" id="client_name" name="client_name" t-att-value="bidding.client_name" required="required"/>
+                            </div>
 
-        <!-- <record id="action_pre_sales_lost" model="ir.actions.act_window">
-            <field name="name">Lost Deals</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">tree,form,graph,pivot</field>
-            <field name="domain">[('bidding_status','=','lost')]</field>
-            <field name="context">{'search_default_group_service_type': 1}</field>
-        </record> -->
+                            <div class="form-group">
+                                <label for="Sbus_id">Company Name</label>
+                                <input type="text" class="form-control" id="Sbus_id" name="Sbus_id" t-att-value="bidding.Sbus_id"/>
+                            </div>
 
-        <!-- <menuitem id="menu_pre_sales_won"
-                  name="Won"
-                  parent="menu_pre_sales_by_status"
-                  sequence="1"
-                  action="action_pre_sales_won"/>
+                            <div class="form-group">
+                                <label for="bidding_amount">Bidding Amount</label>
+                                <input type="text" class="form-control" id="bidding_amount" name="bidding_amount" t-att-value="bidding.bidding_amount"/>
+                            </div>
 
-        <menuitem id="menu_pre_sales_in_progress"
-                  name="In Progress"
-                  parent="menu_pre_sales_by_status"
-                  sequence="2"
-                  action="action_pre_sales_in_progress"/>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" t-att-value="bidding.date"/>
+                            </div>
 
-        <menuitem id="menu_pre_sales_lost"
-                  name="Lost"
-                  parent="menu_pre_sales_by_status"
-                  sequence="3"
-                  action="action_pre_sales_lost"/>
+                            <div class="form-group">
+                                <label for="Service_type">Service Type</label>
+                                <input type="text" class="form-control" id="Service_type" name="Service_type" t-att-value="bidding.Service_type"/>
+                            </div>
 
-        <menuitem id="menu_pre_sales_reports"
-                  name="Reports"
-                  parent="menu_pre_sales_main"
-                  sequence="20"/> -->
+                            <div class="form-group">
+                                <label for="bidding_status">Bidding Status</label>
+                                <select class="form-control" id="bidding_status" name="bidding_status">
+                                    <option value="draft" t-att-selected="'selected' if bidding.bidding_status == 'draft' else None">Draft</option>
+                                    <option value="submitted" t-att-selected="'selected' if bidding.bidding_status == 'submitted' else None">Submitted</option>
+                                    <option value="won" t-att-selected="'selected' if bidding.bidding_status == 'won' else None">Won</option>
+                                    <option value="lost" t-att-selected="'selected' if bidding.bidding_status == 'lost' else None">Lost</option>
+                                </select>
+                            </div>
 
-        <!-- <record id="action_pre_sales_analysis" model="ir.actions.act_window">
-            <field name="name">Pre Sales Analysis</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">graph,pivot</field>
-            <field name="context">{'search_default_group_service_type': 1}</field>
-        </record> -->
+                            <div class="form-group">
+                                <label for="payment_status">Payment Status</label>
+                                <select class="form-control" id="payment_status" name="payment_status">
+                                    <option value="">-- Select --</option>
+                                    <option value="sold" t-att-selected="'selected' if bidding.payment_status == 'sold' else None">Sold</option>
+                                    <option value="unsold" t-att-selected="'selected' if bidding.payment_status == 'unsold' else None">Unsold</option>
+                                </select>
+                            </div>
 
-        <!-- <menuitem id="menu_pre_sales_analysis"
-                  name="Analysis"
-                  parent="menu_pre_sales_reports"
-                  sequence="1"
-                  action="action_pre_sales_analysis"/> -->
+                            <div class="form-group">
+                                <label for="client_category">Client Category</label>
+                                <select class="form-control" id="client_category" name="client_category">
+                                    <option value="">-- Select --</option>
+                                    <option value="new" t-att-selected="'selected' if bidding.client_category == 'new' else None">New</option>
+                                    <option value="existing" t-att-selected="'selected' if bidding.client_category == 'existing' else None">Existing</option>
+                                    <option value="vip" t-att-selected="'selected' if bidding.client_category == 'vip' else None">VIP</option>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="quote_category">Quote Category</label>
+                                <select class="form-control" id="quote_category" name="quote_category">
+                                    <option value="">-- Select --</option>
+                                    <option value="fixed" t-att-selected="'selected' if bidding.quote_category == 'fixed' else None">Fixed Price</option>
+                                    <option value="hourly" t-att-selected="'selected' if bidding.quote_category == 'hourly' else None">Hourly</option>
+                                    <option value="milestone" t-att-selected="'selected' if bidding.quote_category == 'milestone' else None">Milestone Based</option>
+                                </select>
+                            </div>
 
-    </data>
+                            <div class="form-group">
+                                <label for="profile">Profile Name</label>
+                                <input type="text" class="form-control" id="profile" name="profile" t-att-value="bidding.profile"/>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check"/> Update
+                                </button>
+                                <a t-attf-href="/my/bidding/{{bidding.id}}" class="btn btn-secondary">
+                                    <i class="fa fa-times"/> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
 </odoo>
